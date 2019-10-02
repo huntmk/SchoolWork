@@ -1,1 +1,0 @@
-To calcualte the Big O is O(n^2). The n^2 represents that there are two loops being used for the algorithm. 
