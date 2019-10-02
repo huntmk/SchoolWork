@@ -1,0 +1,60 @@
+**Driver.java**
+ Loop to start program
+	a)while decision does not ==3
+	b) if decision equals 1, load students from file
+		-read in file, parse lines, pass each part parsed from the line to the Student constructor
+		-push data in file to stack
+	c)if decision equals 2, print students from the stack
+		-pop data from the file
+	d) else output "Incorrect input" ask user to input again?
+
+**Stack.java**
+// From Lecture
+1. Fields
+	a)private int top
+	b)private int size
+	c)private E[] stack
+
+2. Implement methods
+	a) default constructor(pass in size for stack)
+		- use size if greater than 0 else default size = 10
+	b)boolean isEmpty()
+		-checks if stack is empty
+	c)boolean isFull()
+		-chcecks if it is full
+	d)public E getTop()
+		-return data at top of stack
+	e)public void push(E dataElement
+		-adds data to the stack as long as its not full
+	d)public E pop()
+		-returns data in the stack
+**Student.java**
+
+1. Create Fields
+	a)String first name
+	b)String last name
+	c)String line1
+	d)String line2
+	e)String city
+	f)String state
+	g)String zip
+	h)String id
+	i)String gpa
+	j)Address home
+2. Implement methods
+	a)default constructor
+	b)overloaded constructor(pass all fields into paramter to be read from file)
+	c)public String format()
+	-format the Student's data
+
+**Address.java**
+1. Create fields
+	a)String adres1
+	b)String adres2
+	c)String city
+	d)String zip
+	e)String state
+2. Implement methods
+	a)default constructor(pass in fields to allow variables to be passed into constructor)
+	b)public String getAddress()
+	-return the fields in format for the address

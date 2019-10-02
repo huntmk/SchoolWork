@@ -1,0 +1,21 @@
+This where my algorithim will be!
+
+main method
+1. Both players will start 0
+2. Start a while loop
+3. Call the methods to advance the players
+4. Check values of players so if there value is less than 0, set it to 0. And if greater than or equal to 50. Print  message saying who won.
+5. Call print position method
+6. If index for one of the players >= 50, stop loop
+
+void advance methods
+1.void advancePlayer methods, use random gen to come up with probablility for the cards drawn
+2. If 'that card(random number)' is drawn, change index
+
+
+print method
+1.Make for statement, so for i = 0; and less than or equal to GAME_LEGNTH; increment i. Add and print newline before for statement so that new line is created everytime the function is called.
+2. if playerA == i, print a and set width to i.
+3. if playerB == i , print b and set width to i.
+
+
