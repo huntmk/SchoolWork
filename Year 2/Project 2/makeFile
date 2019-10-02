@@ -1,0 +1,11 @@
+main: BinaryTree.o CrossReference.o Driver.o
+	g++ BinaryTree.o CrossReference.o Driver.o -o main
+
+BinaryTree.o: BinaryTree.cpp BinaryTree.h
+	g++ -c BinaryTree.cpp
+
+CrossReference.o: CrossReference.cpp CrossReference.h 
+	g++ -c CrossReference.cpp
+
+Driver.o: Driver.cpp CrossReference.h BinaryTree.h
+	g++ -c Driver.cpp

@@ -1,0 +1,14 @@
+main: Stack.o Stack.h LinkedList.o LinkedList.h Tour.o Tour.h Driver.o
+	g++ Stack.o LinkeList.o Tour.o Driver.o
+
+Stack.o: Stack.cpp Stack.h
+	g++ -c Stack.cpp
+
+LinkedList.o: LinkedList.cpp LinkedList.h
+	g++ -c LinkedList.cpp
+
+Tour.o: Tour.cpp Tour.h Stack.h LinkedList.h
+	g++ -c Tour.cpp
+
+Driver.o: Driver.cpp Tour.h
+	g++ -c Driver.cpp
