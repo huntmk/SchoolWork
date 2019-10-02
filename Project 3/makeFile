@@ -1,0 +1,18 @@
+main: InsertionSort.o QuickSort.o HeapSort.o MergeSort.o Driver.o
+	g++ Sort.h newSort.h InsertionSort.o QuickSort.o HeapSort.o MergeSort.o Driver.o -o main
+
+InsertionSort.o: InsertionSort.cpp Sort.h
+	g++ -c InsertionSort.cpp
+
+QuickSort.o: QuickSort.cpp newSort.h
+	g++ -c QuickSort.cpp
+
+HeapSort.o: HeapSort.cpp Sort.h
+	g++ -c HeapSort.cpp
+
+MergeSort.o: MergeSort.cpp newSort.h
+	g++ -c MergeSort.cpp
+
+Driver.o: Driver.cpp Sort.h newSort.h
+	g++ -c Driver.cpp
+	
