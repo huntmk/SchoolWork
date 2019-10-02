@@ -1,0 +1,80 @@
+**Driver.java**
+create arrays for each type of Employee to store the objects
+	
+-print menu(1.Load Employees (From File), 2.Exit Program
+-while input != 2
+	-if user enters 1
+		-create another menu 
+		-while input != 4
+			-if input = 1
+				-load Employees from File(BufferedReader(new FileReader("employees.txt")); 
+				(if part[0] == 1, then create employee pharamcy manager type, if part[0] == 2,... so on....
+			-if input = 2
+				-enter hours worked for employee
+				create int hours and set to 0, then ask for it
+
+			-if input = 3
+				-calculate paychecks
+				(if hours is less than or equal to 0, output error message, ask to enter hours before this option)
+
+*/
+**Employee.java**
+	-fields
+		a)Employee id (int)
+		b)First Name (String)
+		c)Last Name (String)
+		d)Hourly Rate (double)
+
+	-implemented methods
+		overloaded constructor(pass in fields)
+
+		public double getHourlyRate()
+			hourlyRate = 0;
+			-return hourlyRate
+**StaffTechnician.java extends Employee**
+	-fields
+		boolean degree = true	
+		
+	-implemented methods
+		default constructor()
+
+	//overriden
+	public double getHourlyRate()
+	Hourly Rate = 20.0
+	-return hourlyRate
+
+**StaffPharmacist.java extends Employee**
+	-fields
+		a)boolena licensed = true
+	-implemented methods
+		default constructor()
+	
+		//overriden 
+	public double getHourlyRate()
+		Hourly Rate = 40.0
+		-return Hourly Rate
+
+**PharmacyManager.java extends Staff Pharmacist**
+	-fields
+		//call hourly rate from staffPharmacist
+		a)boolean leadership
+	-implented methods
+		overloaded constructor(pass in vars)
+		//call constructor from staffPharmacist
+	//overriden 
+		public double getHourlyRate()
+			Hourly Rate = 50.0
+			-return Hourly Rate
+
+
+
+**SeniorTechnician.java extends StaffTechnician**
+	-fields 
+		//call hourly rate from stafftechnician
+		a)boolean serviceAward
+	-implemented methods
+	defualt constructor()
+
+	public double getHourlyRate()
+		Hourly Rate = 25.0
+		-return hourlyRate
