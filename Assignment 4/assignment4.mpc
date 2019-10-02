@@ -1,0 +1,29 @@
+project (assignment4) {
+  exename = assignment4
+  install = .
+ 
+  specific (make, gnuace) {
+    compile_flags += -std=c++11
+  }
+
+  Source_Files {
+	Subtract_Expr_Node.cpp
+	Add_Expr_Node.cpp
+	Num_Expr_Node.cpp
+	Multiply_Expr_Node.cpp
+	Division_Expr_Node.cpp
+	Modulus_Expr_Node.cpp
+	Binary_Expr_Node.cpp
+	Expr_Node.cpp
+	Eval_Expr_Tree.cpp
+	Expr_Node_Visitor.cpp
+	Expr_Tree_Builder.cpp
+	Expr_Builder.cpp
+	Calculator.cpp
+	driver.cpp
+}
+
+  Template_Files {
+   
+  }
+}
