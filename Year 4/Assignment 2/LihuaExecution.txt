@@ -1,0 +1,78 @@
+// Assignment 2: detection by clustering 
+
+1. implement iterative k-means, as described below, and leave k (number of clusters) as an open parameter to be set by the user – [UG&GR]
+2. cluster the image pixels with respect to color, and display the corresponding probability maps – [UG&GR]
+
+Iterative k-means:
+In each execution (from start to convergence), k-means should use different randomly chosen centroids during initialization. The output should be probability maps: e.g., for k=3, output should be three maps:
+P(x belongs to k = i) | F ), for i={1,2,3} (F = how often a pixel "jumps" to a different cluster, or how salient the assignment of x to i is). 
+
+Example:
+
+step 1: load image into variable X (of size h x w x 3)
+
+step 1.5: numofexec = 1 (counts how many times you execute k-means; initialize to 1)
+
+step 2: randomly choose three pixels and use their color as initialization in the color space; i.e., {C1, C2, C3} for k = 3, where C1, C2, C3 are 3x1 (or 1x3) matrices.  
+
+step 3: perform k-means: Xout = somekmeansfun(X, k, C1, C2, C3) ==> notice the input: variable k, and random centroids ==> let the user define k prior to step 1. The output Xout should be of size h x w x 1. For more compact representation (see below), M( : , : , numofexec) = Xout.  See notes below.
+
+step 4: numofexec = numofexec + 1; Repeat step 2 ; repeat step 3. 
+
+step 5: At the end, you will have a 3-dimensional matrix M: size(M) = [h, w, numofexec].  You can visualize the cluster assignments of the pixel X(i, j) as: v = M(i, j, :) ==> size(v) = [1, numofexec]   (1 x numofexec) ==> plot it. 
+For each pixel, you can calculate the frequency of its assignment to each cluster using v.
+
+Notes:
+
+-- steps 2-4 should be in a for-loop.
+
+-- in each exec., the cluster numbers may change: you need to reassign numbers based on the centroid values (e.g., use as reference the value of a chromatic component). For example: the "deep red" (high R-values, very low G,B-values) cluster may be labeled as "1" in one k-means execution, and as "2" in another execution; you will have to align/readjust those cluster number after each k-means execution.
+
+-- to randomly choose centroid values, you can use a random integer generator that will be sampling the image pixels. 
+
+ 
+
+SUBMIT:
+
+Code and screen recording of your execution.
+
+MY CODE: 
+//load image into variable
+X = imread('image.jpg');
+
+//create variable 'numofexec (number of times I execute kmeans: initialize to 1
+numofexec = 1;
+
+//for loop
+	//randomly choose three pixels and use their color as initialization in the color space; 
+	//i.e., {C1, C2, C3} for k = 3, where C1, C2, C3 are 3x1 (or 1x3) matrices.  
+	
+	//
+	AllPixels = X(:,:,:);
+
+	
+	//randperm to get a random pixel and find it's rgb value
+	
+	RED: C1 = image(:,:,1)
+	GREEN: C2 = image(:,:,2)
+	BLUEL C3 = image(:,:,3)
+	
+	EXAMPLE ON HOW TO MAYBE GET RANDOM PIXEL
+****************************	**************************
+	% Load standard demo RGB image:
+rgbImage = imread('peppers.png');
+% Extract the individual red, green, and blue color channels:
+redChannel = rgbImage(:, :, 1);
+greenChannel = rgbImage(:, :, 2);
+blueChannel = rgbImage(:, :, 3);
+% Get 100 random locations:
+locations = randperm(numel(redChannel), 100)
+% Get R, G, and B values at those locations:
+redValues = redChannel(locations)
+greenValues = greenChannel(locations)
+blueValues = blueChannel(locations)
+**********************************************
+	
+	
+	
+	
