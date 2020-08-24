@@ -1,0 +1,109 @@
+<!doctype html>
+<!--
+ Filename: pulling.html
+ Written by: Marcellus Hunt
+ Purpose: Web page for final project that implements 
+ Date: 11 December 2019
+ Modification History:
+ Autofocus on first name value and make it the first required field 10 December 2019
+ Gave the spinner minimum and maximum values and made it read only 11 December 2019
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Example Page</title>
+	<link href="pulling.css" rel="stylesheet">
+	
+	<script src="external/jquery/jquery.js"></script>
+	<script src="pulling.js"></script>
+	<script src="scrape.js"></script>
+	<script src="./../../validation/dist/jquery.validate.js"></script>
+	<style>
+	
+	</style>
+</head>
+<body>
+
+<h1>Shield Athletics! Providing the best equipment to athletes!</h1>
+
+<!-- Tabs -->
+<h2 class="demoHeaders">Information</h2>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Welcome! </a></li>
+		<li><a href="#tabs-2">Account Types</a></li>
+		<li><a href="#tabs-3">Sign in</a></li>
+	</ul>
+	<div id="tabs-1">Welcome to Shield Athletics, to create your account enter your information below.</div>
+	<div id="tabs-2">With a free account you recieve newsletters about the newest products. With a premium account you also get exclusive deals to products.</div>
+	<div id="tabs-3"> If you're already a member. Sign in.</div>
+</div>
+
+
+<h2 class="demoHeaders">Personal Information </h2>
+<div id="inputInfo">
+<form id="formId">
+<div id="personal">
+
+	<h3>First Name</h3>
+	<div><input type="text" id= "firstName" name="firstName" placeholder="Type your name here." required autofocus ></div>
+	<h3>Middle Name (optional)</h3>
+	<div><input type="text" id="autocomplete" name="middle" title="type &quot;a&quot;"></div>
+	<h3>Last Name</h3>
+	<div><input type="text" id="lastName" name= "lastName" placeholder="Type last name."></div>
+	<h3>Telephone </h3>
+	<div><input type="tel" id = "telephone" name="phone" placeholder="Enter phone number."></div>
+	<h3>Birth date </h3>
+	<div id="datepicker"></div>
+	<h3>Email Address </h3>
+	<div><input type="email" id="emailAutocomplete" name="email" placeholder=" @gmail.com"></div>
+	<h3>Password </h3>
+	<div><input type="password" id="password" name="password" placeholder="Enter password. "></div>
+	<h3>Re-type Password </h3>
+	<div><input type="password" id="retypePas" name="confirm_password" placeholder= "retype. "></div>
+
+</div>	
+
+
+<!-- Checkboxradio -->
+<h2 class="demoHeaders">Account Type</h2>
+	<div id="radioset">
+		<input type="radio" id="radio1" value="Free Account" name="radio"><label for="radio1">Free account(newsletters)</label>
+		<input type="radio" id="radio2" value="Premium Account" name="radio" checked="checked"><label for="radio2">Premium account(newsletters and exclusive access to products</label>
+	</div>
+
+
+<h2 class="demoHeaders"> Sports/Hobbies to personalize profile</h2>
+	<div id = "sports">
+		<input type="checkbox" name="sport" id="basket" value="Basketball"> Basektball
+		<input type="checkbox" name="sport" id="football" value="Football"> Football
+		<input type="checkbox" name="sport" id="base" value="Baseball"> Baseball
+		<input type="checkbox" name="sport" id="soccer" value="Soccer"> Soccer
+		<input type="checkbox" name="sport" id="hike" value="Hiking"> Hiking
+		<input type="checkbox" name="sport" id="other" value="Fitness Traning/Other" checked> Fitness Training/Other
+	</div>
+	
+<!-- Button -->
+
+<!-- Spinner -->
+<h2 class="demoHeaders">Please help us and rate our service and website (1-10)(Spinner)</h2>
+<input type="number" id="spinner" value="1" min="1" max="10" readonly>
+
+
+<h2 class="demoHeaders">Submit</h2>
+<input type="submit" id="button" />
+
+<h3> Clear </h3>
+<button type="reset" id="button-icon">Clear</button>
+
+<p id="output">
+
+OUTPUT
+
+</p>
+</form>
+</div>
+
+
+</body>
+</html>
