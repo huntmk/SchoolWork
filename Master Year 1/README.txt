@@ -5,4 +5,4 @@ Computer Graphics
   Homeworks 1 - 4 (more detail in folder)
   
 Statistical computing
-  Project using R
+  Stats Project using R to analyze risk-associated cancers.
