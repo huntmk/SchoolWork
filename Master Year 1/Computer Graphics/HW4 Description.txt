@@ -1,0 +1,22 @@
+This assignment uses model transformations on P, N, and W letter models to create an animation.
+
+In the zip file there is an animation file, animation.gif and an outline of a Java program OfflinePNW.java. You should complete the Java program so that it replicates the animation. For the P, N, and W letters, use the models contained in the zip file (that will make it easier to duplicate the animation).
+
+For this assignment, you should do all the transformations of a model using the model-to-view matrix in the Position object that holds the Model object.
+
+In the renderer_7.zip zip file there is a sub folder "basic transformation examples" containing several examples of using translations and rotations to create animations. Build the Javadoc for that folder and open the html sub-folder's index.html file using a web browser. The Javadocs combine each example's explanation with it animated gif file.
+
+Also look at RotationExample.java and its variations in renderer_7.zip.
+
+Here is the most important thing to remember from those examples. If you want to rotate a model around the point (a,b,c) in the model's coordinate system, and you want this rotation to happen at the point (u,v,w) in the camera's view coordinate system, then you would do that with the following three transformations (where position is the Position object holding the Model object).
+
+      position.matrix = Matrix.identity();
+      position.matrix.mult(Matrix.translate(u, v, w));
+      position.matrix.mult(Matrix.rotate(theta, _,_,_));  // choose any axis
+      position.matrix.mult(Matrix.translate(-a, -b, -c));
+You can abbreviate this a bit as the following product of three matrices.
+
+      position.matrix = Matrix.translate(u, v, w)
+                  .mult(Matrix.rotate(theta, _,_,_))   // choose any axis
+                  .mult(Matrix.translate(-a, -b, -c));
+In the zip file there is a folder, animation_frames, that contains all the frames from animation.gif. These individual frames make it a bit easier for you to figure out exactly what is happening in the animation.
