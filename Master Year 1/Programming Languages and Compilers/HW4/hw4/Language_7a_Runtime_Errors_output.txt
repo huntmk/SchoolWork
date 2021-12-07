@@ -1,0 +1,104 @@
+0 =========================================
+(array dim)
+
+EvalException: improper array constructor: (array dim)
+1 =========================================
+(array dim 0)
+
+EvalException: improper size in array constructor: (array dim 0)
+2 =========================================
+(array dim -1)
+
+EvalException: improper size in array constructor: (array dim -1)
+3 =========================================
+(begin (var x false) (array dim x))
+
+EvalException: improper size in array constructor: (array dim x)
+4 =========================================
+(array dim 1 2 3)
+
+EvalException: too many values in array constructor: (array dim 1 2 3)
+5 =========================================
+(index (array dim 5) 5)
+
+EvalException: array index out of bounds: (index (array dim 5) 5)
+6 =========================================
+(index (array dim 5) -1)
+
+EvalException: array index out of bounds: (index (array dim 5) -1)
+7 =========================================
+(index (array dim 5) 1 2)
+
+EvalException: improper index expression: (index (array dim 5) 1 2)
+8 =========================================
+(index (array dim 5))
+
+EvalException: improper index expression: (index (array dim 5))
+9 =========================================
+(index 10 1)
+
+EvalException: improper array in index expression: (index 10 1)
+10 =========================================
+(set (index (array dim 5) 5) 0)
+
+EvalException: array index out of bounds: (index (array dim 5) 5)
+11 =========================================
+(set (index (array dim 2) 0) (index (array dim 5) 5))
+
+EvalException: array index out of bounds: (index (array dim 5) 5)
+12 =========================================
+(set 0 1)
+
+EvalException: improper variable name: 0
+13 =========================================
+(set x 1)
+
+EvalException: undefined variable: x
+14 =========================================
+(sizeOf 0)
+
+EvalException: improper array in sizeOf expression: (sizeOf 0)
+15 =========================================
+(sizeOf x)
+
+EvalException: undefined variable: x
+16 =========================================
+(sizeOf (array dim 3) 4)
+
+EvalException: improper sizeOf expression: (sizeOf (array dim 3) 4)
+17 =========================================
+(begin (var x false) (sizeOf x))
+
+EvalException: improper array in sizeOf expression: (sizeOf x)
+18 =========================================
+(sizeOf (array dim 5) 0)
+
+EvalException: improper sizeOf expression: (sizeOf (array dim 5) 0)
+19 =========================================
+(rand 1)
+
+EvalException: wrong number of args for rand: (rand 1)
+20 =========================================
+(rand 1 2 3)
+
+EvalException: wrong number of args for rand: (rand 1 2 3)
+21 =========================================
+(rand 10 1)
+
+EvalException: improper range for rand expression: (rand 10 1)
+22 =========================================
+(rand 1 1)
+
+EvalException: improper range for rand expression: (rand 1 1)
+23 =========================================
+(rand false 1)
+
+EvalException: improper int in rand expression: (rand false 1)
+24 =========================================
+(rand 0 true)
+
+EvalException: improper int in rand expression: (rand 0 true)
+25 =========================================
+(begin (var x false) (rand x 10))
+
+EvalException: improper int in rand expression: (rand x 10)

@@ -1,0 +1,143 @@
+
+      Language_7 with arrays, for-loop expression, and incrementing operators
+
+
+An expression in this language is defined by the following grammar.
+
+       Prog ::= Exp
+              | '(' 'prog' (Fun | Exp)+ Exp ')'
+
+        Fun ::= '(' 'fun' VARIABLE Lambda ')'   // a function declaration
+
+     Lambda ::= '(' 'lambda' VARIABLE* Exp ')'  // formal parameters followed by function body
+
+        Exp ::= Array
+              | IndexExp
+              | SizeOf
+              | Rand
+              | Repeat
+              | For
+              | IncDec
+              | Spaceship
+              | Apply
+              | If
+              | While
+              | Begin
+              | Set
+              | Var
+              | Print
+              | AExp
+              | BExp
+              | INTEGER
+              | BOOLEAN
+              | VARIABLE
+
+      Array ::= '(' 'array' 'dim' Exp ')'       // instantiate an array value of size Exp
+              | '(' 'array'  Exp+ ')'           // instantiate an array value literal
+              | '(' 'array' 'dim' Exp Exp* ')'  // partially initialized array
+
+   IndexExp ::= '(' 'index' Exp Exp ')'     // 1st operand is array, 2nd operand is integer
+
+     SizeOf ::= '(' sizeOf Exp ')'          // operand must be an array
+
+       Rand ::= '(' 'rand' Exp Exp ')'      // return a random integer between Exp and Exp
+
+     Repeat ::= '(' 'repeat' Exp Exp ')'
+     
+        For ::= '(' 'for' Exp Exp Exp Exp ')'
+     
+     IncDec ::= '(' '++'  VARIABLE ')'      // post-increment
+              | '(' '--'  VARIABLE ')'      // post-decrement
+              | '(' '+++' VARIABLE ')'      // pre-increment
+              | '(' '---' VARIABLE ')'      // pre-decrement
+
+  Spaceship ::= '(' '<=>' Exp Exp ')'
+  
+      Apply ::= '(' 'apply' Exp Exp* ')'    // function value followed by actual parameters
+
+         If ::= '(' 'if' Exp Exp Exp ')'
+
+      While ::= '(' 'while' Exp Exp ')'
+
+      Begin ::= '(' 'begin' Exp+ ')'
+      
+        Set ::= '(' 'set' VARIABLE Exp ')'
+              | '(' 'set' IndexExp Exp ')'  // set an array element
+
+        Var ::= '(' 'var' VARIABLE Exp ')'
+
+      Print ::= '(' 'print' Exp ')'
+
+       BExp ::= '(' '||'  Exp Exp+ ')'
+              | '(' '&&'  Exp Exp+ ')'
+              | '(' '!'   Exp ')'
+              | '('  EqOp Exp Exp ')'
+              | '(' RelOp Exp Exp ')'
+
+       EqOp ::= '==' | '!='
+      RelOp ::= '<' | '>' | '<=' | '>='
+
+       AExp ::= '(' '+' Exp Exp* ')'
+              | '(' '-' Exp Exp? ')'
+              | '(' '*' Exp Exp+ ')'
+              | '(' '/' Exp Exp  ')'
+              | '(' '%' Exp Exp  ')'
+              | '(' '^' Exp Exp  ')'
+
+    INTEGER ::= [-|+][0-9]+
+    BOOLEAN ::= 'true' | 'false'
+   VARIABLE ::= [a-zA-Z][a-zA-Z0-9]*
+
+
+In this language we add arrays to Language_7. To add arrays to this language, we need an 'array' constructor expression, an 'index' expression for accessing array elements, a 'sizeOf' expression for returning an array's dimension, and we need to modify the 'set' expression so that it can mutate array elements.
+
+In addition to arrays, we also add to Language_7 the for-loop and repeat-loop expressions from Assignment 3, and the increment/decrement expressions from Assignment 2.
+
+This language also adds a random number expression to our language. This expression is useful for testing arrays.
+
+This language adds a new Value type, "array", that should use the tag Value.ARRAY_TAG. You need to modify the Value class to handle this new kind of Value. An 'array' value in this language should be implemented as a Java array, but NOT as an array of ints (or an array of booleans) but as an array of Value objects. So the arrays in this language are NOT homogeneous; the arrays can be of mixed type. The following should be allowed.
+   (array 10 20 30 true -5 false (array 1 2 3) x y z)
+This array would hold 10 values: 4 integers, 2 booleans, one array, and three other values that can be anything (the values of the variables x, y and z).
+
+This language defines three constructors for arrays. The first constructor declares only the size of the array (which should be a positive integer). The array constructed by this constructor should be initialized to all nulls (which is what Java defaults to when you declare an array of objects). The second constructor allows the array to be initialized by an array literal (and the size of the constructed array is the size of the array literal). The third array constructor combines the first two constructors. It takes a size parameter (and allocates an array of that size) and then it takes some values that are used to (partially) intialize the new array. So
+   (array dim 10 1 2 3 4 5)
+creates an array of size ten, with the first half initialized to the values 1, 2, 3, 4, 5, and the second half all nulls. So
+   (array dim 10 1 2 3 4 5)
+constructs the array
+   {1 2 3 4 5 null null null null null}
+
+This language has an expression, 'sizeOf', that returns an array's size, and an expression, 'index', for accessing individual elements of an array.
+
+Notice that the Set expression has a new clause that allows us to set individual elements of an array. The new syntax for Set means that IndexExp can be used as either an "l-value" or as an "r-value" (to use some C terminology). For example, if we assume "a" is declared as an array and "x" is declared as a integer, then
+   (set x (index a 1))
+uses (index a 1) as an "r-value" (in C, this would look like x=a[1], so a[1] is used on the right hand side of an assignment). On the other hand,
+   (set (index a 1) x)
+uses (index a 1) as an "l-value" (in C, this would look like a[1]=x, so a[1] is used on the left hand side of an assignment). And
+   (set (index a 0) (index a 1))
+uses the IndexExp as both an l-value and an r-value (in C, this would look like a[0]=a[1]). When IndexExp is used as an r-value, it is the value stored in the array that should be returned. When IndexExp is used as an l-value, it is the "location" in the array that is being "returned" (I put "returned" in quotations, because an l-value is not an expression in this language, so an l-value does not really have a "value"; in C, an l-value returns an address).
+
+Here are some more details about the semantics of arrays.
+
+Arrays are indexed staring at 0.
+
+Arrays know their size (which is returned by a 'sizeOf' expression).
+
+It is a runtime error (EvalException) to declare an array with a dimension that is not a positive integer.
+
+It is a runtime error (EvalException) to initialize an array with more values than the array is declared to hold. That is, in the array constructor (array dim Exp Exp*) the number of argument values must be less than or equal to the value of the dimension expression.
+
+It is a runtime error (EvalException) to access an array element beyond the array's limits.
+
+The toString() method in the Value class should be implemented to convert the elements of an array using a notation like C array literals. For example
+   (print (array 1 2 3 4 5))
+should print out
+{1, 2, 3, 4, 5}
+
+
+This language also includes a utility function 'rand' that returns a random integer. A 'rand' expression of the form
+   (rand exp1 exp2)
+must have exp1 and exp2 evaluate to integers with exp1 < exp2. The return value r is a randomly choosen integer with exp1 <= r <= exp2. Your implementation of 'rand' should work correctly if either of exp1 or exp2 evaluates to a negative integer. Use Java's nextInt(int n) method from the java.util.Random class to implement 'rand'.
+
+It is a runtime error (EvalException) if either operand of 'rand' is not an integer or if the operands are not in the correct order.
+
+The main use for 'rand' is to give us a convenient way to fill up large arrays with random numbers for testing purposes.

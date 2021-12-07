@@ -1,0 +1,241 @@
+0 =========================================
+(prog (var y 6)
+      (fun f
+           (lambda x (* x y)))
+      (var z (apply f 5)))
+
+Program
+{
+   var y = 6;
+   f(x)
+   {
+      x * y;
+   };
+   var z = f(5);
+}
+
+result = 30
+
+1 =========================================
+(prog (var w 10)
+      (fun f
+           (lambda x y z (+ x y z w)))
+      (var x (apply f 1 2 3))
+      (var y (apply f 4 5 x))
+      (var z
+           (apply f (+ w x y) 10 20)))
+
+Program
+{
+   var w = 10;
+   f(x, y, z)
+   {
+      x + y + z + w;
+   };
+   var x = f(1, 2, 3);
+   var y = f(4, 5, x);
+   var z = f(w + x + y, 10, 20);
+}
+
+result = 101
+
+2 =========================================
+(prog (var w 2)
+      (fun f
+           (lambda x (* x x w)))
+      (fun g
+           (lambda y (+ y y w)))
+      (var z
+           (apply g (apply f 5))))
+
+Program
+{
+   var w = 2;
+   f(x)
+   {
+      x * x * w;
+   };
+   g(y)
+   {
+      y + y + w;
+   };
+   var z = g(f(5));
+}
+
+result = 102
+
+3 =========================================
+(prog (var w 2)
+      (fun f
+           (lambda x
+                   (var v (* x x w))))
+      (fun g
+           (lambda y
+                   (var u
+                        (+ y w (apply f y)))))
+      (var z (apply g 5)))
+
+Program
+{
+   var w = 2;
+   f(x)
+   {
+      var v = x * x * w;
+   };
+   g(y)
+   {
+      var u = y + w + f(y);
+   };
+   var z = g(5);
+}
+
+result = 57
+
+4 =========================================
+(prog (var w 10)
+      (fun f
+           (lambda x
+                   (var u (* x x w))))
+      (begin (var x 0)
+             (begin (var y 2)
+                    (begin (set x w)
+                           (var z
+                                (apply f (+ x y w)))))))
+
+Program
+{
+   var w = 10;
+   f(x)
+   {
+      var u = x * x * w;
+   };
+   {
+      var x = 0;
+      {
+         var y = 2;
+         {
+            x = w;
+            var z = f(x + y + w);
+         }
+      }
+   }
+}
+
+result = 4840
+
+5 =========================================
+(prog (var n 1)
+      (fun f
+           (lambda x (* n x)))
+      (fun g
+           (lambda x
+                   (begin (var n 5)
+                          (var r (apply f x)))))
+      (var z (apply g 2)))
+
+Program
+{
+   var n = 1;
+   f(x)
+   {
+      n * x;
+   };
+   g(x)
+   {
+      var n = 5;
+      var r = f(x);
+   };
+   var z = g(2);
+}
+
+result = 2
+
+6 =========================================
+(prog (fun fac
+           (lambda n
+                   (if (<= n 0)
+                       1
+                       (* n
+                          (apply fac (- n 1))))))
+      (apply fac 6))
+
+Program
+{
+   fac(n)
+   {
+      if (n <= 0)
+         1;
+      else
+         n * fac(n - 1);
+   };
+   fac(6);
+}
+
+result = 720
+
+7 =========================================
+(prog (fun even
+           (lambda n
+                   (&& (!= n 1)
+                       (|| (<= n 0)
+                           (apply even (- n 2))))))
+      (print (apply even 7))
+      (print (apply even 6))
+      (print (apply even 0))
+      (apply even -1))
+
+Program
+{
+   even(n)
+   {
+      n != 1 && (n <= 0 || even(n - 2));
+   };
+   print( even(7) );
+   print( even(6) );
+   print( even(0) );
+   even(-1);
+}
+
+false
+true
+true
+result = true
+
+8 =========================================
+(prog (fun even
+           (lambda n
+                   (|| (<= n 0)
+                       (apply odd (- n 1)))))
+      (fun odd
+           (lambda n
+                   (&& (> n 0)
+                       (|| (== n 1)
+                           (apply even (- n 1))))))
+      (print (apply even 8))
+      (print (apply odd 7))
+      (print (apply odd 6))
+      (print (apply even 3))
+      (apply even -1))
+
+Program
+{
+   even(n)
+   {
+      n <= 0 || odd(n - 1);
+   };
+   odd(n)
+   {
+      n > 0 && (n == 1 || even(n - 1));
+   };
+   print( even(8) );
+   print( odd(7) );
+   print( odd(6) );
+   print( even(3) );
+   even(-1);
+}
+
+true
+true
+false
+false
+result = true

@@ -1,0 +1,102 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51530 - Homework 4</title>
+  <meta name="description" content="CS 51530 homework 4">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51530.html">CS 51530</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://math.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 4<br>
+CS 51530<br>
+Programming Languages, Interpreters and Compilers<br>
+Spring, 2021
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw4.zip">zip file</a>.
+This assignment is due Monday, March 29.
+</p>
+
+<p>
+This assignment is based on <a href="http://cs.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a> and <a href="http://math.pnw.edu/~rlkraft/cs51530/homework/hw3.html">programming assignment 3</a>. You will add one new Value type to Language_7 (arrays), several new expressions, and also the for and repeat loops from Langauage_6a to create Language_7a.
+</p>
+
+<p>
+In the zip file there is a file <code>Language_7a.txt</code> that describes the syntax and semantics of Language_7a. Your assignment is to add code to the interpreter for Language_7 so that the new interpreter can handle array values and array expressions. Language_7a also includes the for-loop and repeat-loop expressions from Assignment 3 and the increment/decrement, spaceship operators from Assignment 2.
+</p>
+
+<p>
+In the zip file there is the file <code>Evaluate_7a.java</code>. As distributed, this file is the interpreter for Language_7. Your assignment is to copy your code for the for-loop, repeat-loop, inc/dec operators, and spaceship operator from Language_6a into <code>Evaluate_7a.java</code> and then add code that handles the new array expressions. You also need to modify the file <code>Value.java</code> to add to it the new array type.
+</p>
+
+<p>
+When you have finished implementing <code>Language_7a.java</code>, include your version of <code>PrettyPrinter2.java</code> from Assignments 2 and 3 in the <code>hw4</code> folder. Then the file <code>Language_7a_Examples.java</code> should compile and run. The output from running this program should look almost exactly like <code>Language_7a_Examples_output_debug_0.txt</code> or <code>Language_7a_Examples_output_debug_1.txt</code>, depending on how you set the debug level (your output cannot look exactly like either of those files because some of the output is randomly generated). Also, make sure that you didn't break anything from Language_7 or Language_6a. The programs <code>Language_7_Examples.java</code> and <code>Language_6a_Examples.java</code> from the zip file should also compile and run correctly and the programs' output should look exactly like <code>Language_7_Examples_output_debug_0.txt</code> and <code>Language_6a_Examples_output_debug_0.txt</code>.
+</p>
+
+<p>
+In the zip file there is the file <code>Language_7a_Runtime_Errors.java</code> that gives you an idea of the kinds of runtime errors that your interpreter code should check for.
+</p>
+
+<p>
+As before, you get the interpreter to produce all the extra debug output by setting the static variable
+</p>
+<pre>
+       DEBUG = 1;
+</pre>
+<p>
+in the file <code>Evaluate_7a.java</code>.
+</p>
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51530/handin.html">Turn in</a> a zip file called <code>CS51530Hw4Surname.zip</code> (where <code>Surname</code> is your last name) containing your versions of <code>Language_7a.java</code>, <code>Value.java</code>, and <code>PrettyPrinter2.java</code> (just those three files). Be sure to put your name and email address in <b>every</b> file your turn in.
+</p>
+
+<p>
+This assignment is due Monday, March 29.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+0 =========================================
+(prog (var a (array 1 2 3 4 5 6 false true))
+      (var b (array dim 10 1 2 3 4 5 false a))
+      (print a)
+      (print b)
+      (print (index b 4))
+      (print (index b 5))
+      (print (index b 6))
+      (print (sizeOf b))
+      (var c (array dim 10))
+      (set (index c 5) (index a 2))
+      c)
+
+Program
+{
+   var a = {1, 2, 3, 4, 5, 6, false, true};
+   var b = Array[10: {1, 2, 3, 4, 5, false, a}];
+   print( a );
+   print( b );
+   print( b[4] );
+   print( b[5] );
+   print( b[6] );
+   print( sizeOf(b) );
+   var c = Array[10];
+   c[5] = a[2];
+   c;
+}
+
+{1, 2, 3, 4, 5, 6, false, true}
+{1, 2, 3, 4, 5, false, {1, 2, 3, 4, 5, 6, false, true}, null, null, null}
+5
+false
+{1, 2, 3, 4, 5, 6, false, true}
+10
+result = {null, null, null, null, null, 3, null, null, null, null}
+
+1 =========================================
+(prog (var n 5)
+      (var a (array dim n))
+      (print (sizeOf a))
+      (print a)
+      (var i 0)
+      (while (< i (sizeOf a))
+             (begin (set (index a i) (- i))
+                    (print (index a i))
+                    (set i (+ i 1))))
+      a)
+
+Program
+{
+   var n = 5;
+   var a = Array[n];
+   print( sizeOf(a) );
+   print( a );
+   var i = 0;
+   while (i < sizeOf(a))
+   {
+      a[i] = -i;
+      print( a[i] );
+      i = i + 1;
+   }
+   a;
+}
+
+5
+{null, null, null, null, null}
+0
+-1
+-2
+-3
+-4
+result = {0, -1, -2, -3, -4}
+
+2 =========================================
+(prog (fun g
+           (lambda x (+ 10 x)))
+      (fun printArray
+           (lambda a
+                   (for (var i 0)
+                        (< i (sizeOf a))
+                        (++ i)
+                        (print (index a i)))))
+      (fun arrayMap
+           (lambda f
+                   a
+                   (begin (for (var i 0)
+                               (< i (sizeOf a))
+                               (+++ i)
+                               (set (index a i)
+                                    (apply f (index a i))))
+                          a)))
+      (var a (array 2 3 4 5))
+      (print a)
+      (apply arrayMap g a)
+      (print a)
+      (apply printArray (apply arrayMap g a))
+      a)
+
+Program
+{
+   g(x)
+   {
+      10 + x;
+   };
+   printArray(a)
+   {
+      for (var i = 0; i < sizeOf(a); i++)
+         print( a[i] );;
+   };
+   arrayMap(f, a)
+   {
+      for (var i = 0; i < sizeOf(a); ++i)
+         a[i] = f(a[i]);;
+      a;
+   };
+   var a = {2, 3, 4, 5};
+   print( a );
+   arrayMap(g, a);
+   print( a );
+   printArray(arrayMap(g, a));
+   a;
+}
+
+{2, 3, 4, 5}
+{12, 13, 14, 15}
+22
+23
+24
+25
+result = {22, 23, 24, 25}
+
+3 =========================================
+(prog (fun fill
+           (lambda a
+                   (begin (var i 0)
+                          (while (< i (sizeOf a))
+                                 (begin (set (index a i) (rand 0 100))
+                                        (set i (+ i 1))))
+                          a)))
+      (fun max
+           (lambda a
+                   (begin (var m (index a 0))
+                          (var i 1)
+                          (while (< i (sizeOf a))
+                                 (begin (if (< m (index a i))
+                                            (set m (index a i))
+                                            0)
+                                        (set i (+ i 1))))
+                          m)))
+      (var SIZE 20)
+      (apply max
+             (print (apply fill (array dim SIZE)))))
+
+Program
+{
+   fill(a)
+   {
+      var i = 0;
+      while (i < sizeOf(a))
+      {
+         a[i] = rand(0, 100);
+         i = i + 1;
+      };
+      a;
+   };
+   max(a)
+   {
+      var m = a[0];
+      var i = 1;
+      while (i < sizeOf(a))
+      {
+         if (m < a[i])
+            m = a[i];
+         else
+            0;;
+         i = i + 1;
+      };
+      m;
+   };
+   var SIZE = 20;
+   max(print( fill(Array[SIZE]) ));
+}
+
+{50, 41, 40, 95, 79, 38, 65, 68, 69, 10, 2, 39, 77, 97, 54, 58, 63, 69, 1, 41}
+result = 97
+
+4 =========================================
+(prog (fun fill
+           (lambda a
+                   (for (var i 0)
+                        (< i (sizeOf a))
+                        (++ i)
+                        (set (index a i) (rand 0 100)))))
+      (fun extreme
+           (lambda a
+                   comp
+                   (begin (var m (index a 0))
+                          (for (var i 1)
+                               (< i (sizeOf a))
+                               (++ i)
+                               (if (apply comp (index a i) m)
+                                   (set m (index a i))
+                                   0))
+                          m)))
+      (fun comp1
+           (lambda a b (< a b)))
+      (fun comp2
+           (lambda a b (> a b)))
+      (var SIZE 20)
+      (var a (array dim SIZE))
+      (apply fill a)
+      (print (apply extreme a comp1))
+      (print (apply extreme a comp2))
+      a)
+
+Program
+{
+   fill(a)
+   {
+      for (var i = 0; i < sizeOf(a); i++)
+         a[i] = rand(0, 100);;
+   };
+   extreme(a, comp)
+   {
+      var m = a[0];
+      for (var i = 1; i < sizeOf(a); i++)
+         if (comp(a[i], m))
+            m = a[i];
+         else
+            0;;
+      m;
+   };
+   comp1(a, b)
+   {
+      a < b;
+   };
+   comp2(a, b)
+   {
+      a > b;
+   };
+   var SIZE = 20;
+   var a = Array[SIZE];
+   fill(a);
+   print( extreme(a, comp1) );
+   print( extreme(a, comp2) );
+   a;
+}
+
+6
+99
+result = {75, 7, 77, 91, 91, 83, 40, 99, 31, 95, 28, 9, 14, 94, 74, 33, 13, 88, 6, 56}
+
+5 =========================================
+(prog (fun fill
+           (lambda a
+                   (begin (for (var i 0)
+                               (< i (sizeOf a))
+                               (++ i)
+                               (set (index a i) (rand 0 100)))
+                          a)))
+      (fun sort
+           (lambda a
+                   comp
+                   (begin (var done false)
+                          (while (! done)
+                                 (begin (set done true)
+                                        (for (var i 0)
+                                             (< i
+                                                (- (sizeOf a) 1))
+                                             (++ i)
+                                             (if (apply comp
+                                                        (index a (+ i 1))
+                                                        (index a i))
+                                                 (begin (set done false)
+                                                        (var temp (index a i))
+                                                        (set (index a i)
+                                                             (index a (+ i 1)))
+                                                        (set (index a (+ i 1))
+                                                             temp))
+                                                 0))))
+                          a)))
+      (fun comp1
+           (lambda a b (< a b)))
+      (fun comp2
+           (lambda a b (> a b)))
+      (var SIZE 10)
+      (var a (array dim SIZE))
+      (print (apply fill a))
+      (print (apply sort a comp1))
+      (print (apply sort a comp2))
+      a)
+
+Program
+{
+   fill(a)
+   {
+      for (var i = 0; i < sizeOf(a); i++)
+         a[i] = rand(0, 100);;
+      a;
+   };
+   sort(a, comp)
+   {
+      var done = false;
+      while (!done)
+      {
+         done = true;
+         for (var i = 0; i < sizeOf(a) - 1; i++)
+            if (comp(a[i + 1], a[i]))
+            {
+               done = false;
+               var temp = a[i];
+               a[i] = a[i + 1];
+               a[i + 1] = temp;
+            }
+            else
+               0;;
+      };
+      a;
+   };
+   comp1(a, b)
+   {
+      a < b;
+   };
+   comp2(a, b)
+   {
+      a > b;
+   };
+   var SIZE = 10;
+   var a = Array[SIZE];
+   print( fill(a) );
+   print( sort(a, comp1) );
+   print( sort(a, comp2) );
+   a;
+}
+
+{17, 38, 32, 47, 49, 12, 19, 41, 15, 24}
+{12, 15, 17, 19, 24, 32, 38, 41, 47, 49}
+{49, 47, 41, 38, 32, 24, 19, 17, 15, 12}
+result = {49, 47, 41, 38, 32, 24, 19, 17, 15, 12}
