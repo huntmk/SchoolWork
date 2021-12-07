@@ -1,0 +1,77 @@
+
+      Language_3a & Language_6 with for-loop and repeat-loop expressions
+
+
+An expression in this language is defined by the following grammar.
+
+       Prog ::= Exp
+              | '(' 'prog' Exp+ ')'
+
+        Exp ::= For
+              | Repeat
+              | PostInc
+              | PreInc
+              | PostDec
+              | PreDec
+              | Spaceship
+              | If
+              | While
+              | Set
+              | Var
+              | Begin
+              | Print
+              | AExp
+              | BExp
+              | INTEGER
+              | BOOLEAN
+              | VARIABLE
+
+        For ::= '(' 'for' Exp Exp Exp Exp ')'
+
+     Repeat ::= '(' 'repeat' Exp Exp ')'
+
+    PostInc ::= '(' '++'  VARIABLE ')'
+    PostDec ::= '(' '--'  VARIABLE ')'
+     PreInc ::= '(' '+++' VARIABLE ')'
+     PreDec ::= '(' '---' VARIABLE ')'
+
+  Spaceship ::= '(' '<=>' Exp Exp ')'
+
+         If ::= '(' 'if' Exp Exp Exp ')'
+
+      While ::= '(' 'while' Exp Exp ')'
+
+        Set ::= '(' 'set' VARIABLE Exp ')'
+
+        Var ::= '(' 'var' VARIABLE Exp ')'
+
+      Begin ::= '(' 'begin' Exp+ ')'
+
+      Print ::= '(' 'print' Exp ')'
+
+       BExp ::= '(' '||'  Exp Exp+ ')'
+              | '(' '&&'  Exp Exp+ ')'
+              | '(' '!'   Exp ')'
+              | '('  EqOp Exp Exp ')'
+              | '(' RelOp Exp Exp ')'
+
+       EqOp ::= '==' | '!='
+      RelOp ::= '<' | '>' | '<=' | '>='
+
+       AExp ::= '(' '+' Exp Exp* ')'
+              | '(' '-' Exp Exp? ')'
+              | '(' '*' Exp Exp+ ')'
+              | '(' '/' Exp Exp  ')'
+              | '(' '%' Exp Exp  ')'
+              | '(' '^' Exp Exp  ')'
+
+    INTEGER ::= [-|+][0-9]+
+    BOOLEAN ::= 'true' | 'false'
+   VARIABLE ::= [a-zA-Z][a-zA-Z0-9]*
+
+
+In this language we add for-loop and repeat-loop expressions to Language_6 along with the operators from Language_3a.
+
+When the interpreter evaluates a For expression, the first thing the interpreter will do is create an empty, local Environment object and link that object to the current Environment chain. All four of the For expression's expressions should be evaluated using the new environment chain. After creating the local environment the interpreter should evaluate the For expression's first expression for its side effect. Then the interpreter should evaluate the For expression's second expression, which must evaluate to a boolean value. If that value is false, then the For expression is done and the value of the For expression is false. If the boolean value is true, then the interpreter should evaluate the For expression's fourth expression for its side effect. After evaluating the fourth expression, the interpreter should evaluate the For expression's third expression for its side effect. After that, the interpreter should return to the For expression's second expression and evaluate its boolean value and continue looping until the boolean value is false. Notice that the For expression's first expression is evaluated only one time, its second expression is evaluated at least one time (and is always the last of the four expressions to be evaluated), and the third and fourth expressions may not be evaluated.
+
+The evaluation of a Repeat expression should first evaluate the first expression and save its value. Then the interpreter should evaluate the second expression, which must evaluate to a boolean value. If the boolean value is false, then the evaluation of the Repeat expression is complete and the value of the Repeat expression is the value saved from the first expression. If the second expression is true, then the first expression should be evaluated again (and its value saved) and then the second expression should be evaluated again. Continue until the value of the second expression is false. The value of the Repeat expression should be the value saved from the last evaluation of the first expression.

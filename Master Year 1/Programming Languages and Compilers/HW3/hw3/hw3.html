@@ -1,0 +1,116 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51530 - Homework 3</title>
+  <meta name="description" content="CS 51530 Homework 3">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51530.html">CS 51530</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://math.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 3<br>
+CS 51530<br>
+Programming Languages, Interpreters and Compilers<br>
+Spring, 2021
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw3.zip">zip file</a>.
+This assignment is due Monday, March 8.
+</p>
+
+<p>
+This assignment is based on <a href="http://cs.pnw.edu/~rlkraft/cs51530/for-class/Language-6.zip">Language_6</a> and <a href="http://math.pnw.edu/~rlkraft/cs51530/homework/hw2.html">programming assignment 2</a>. You will add two new expressions to Language_6 and also the five operators from Langauage_3a to create Language_6a.
+</p>
+
+<p>
+In the zip file there is a file <code>Language_6a.txt</code> that describes the syntax and semantics of Language_6a. Language_6a adds for-loop and repeat-loop expressions to Language_6 and it also adds the five operators from Language_3a.
+</p>
+
+<p>
+In the zip file there is the file <code>Evaluate_6a.java</code>. As distributed, this file is the interpreter for Language_6. Your assignment is to copy your code for the five operators from Language_3a into <code>Evaluate_6a.java</code> and then add code that handles the two new loop expressions.
+</p>
+
+<p>
+The for-loop in Language_6a should have the same semantics as a for-loop in Java or C++. In particular, be sure to notice the difference between (using Java/C++ notation)
+</p>
+<pre>
+      int i = 0;
+      for (i = 1; i < 3; ++i)
+</pre>
+<p>and</p>
+<pre>
+      for (int i = 1; i < 3; ++i)
+</pre>
+<p>
+In the second for-loop, the variable <code>i</code> is declared local to the for-loop. In order to implement a local variable for a for-loop, your for-loop implementation will need to add an <code>Environment</code> object to the current environment chain, much like the <code>begin</code> expression. Your for-loop implementation should evaluate all four of the for-loop's expressions using the new environment chain (see the file <code>Language_6a.txt</code> for more details).
+</p>
+
+<p>
+The repeat-loop expression is, unlike the while-loop and for-loop, a "real" expression in that it can compute a useful value (a while-loop, or a for-loop, always evaluates to <code>false</code> and is only useful for its side effects). A repeat-loop has two expressions. The second expression must evaluate to a boolean value. The first expression will provide the value of the repeat-loop expression. The repeat-loop first evaluates, and remembers the value of, its first expression. Then it evaluates its second expression. If the boolean value is false, then the repeat-loop is done and its value is the saved value from the first expression. If the boolean value is true, the repeat-loop should continue looping until the boolean value is false. The value of the repeat-loop expression will be the last evaluation of its first expression.
+</p>
+
+<p>
+When you have finished implementing <code>Evaluate_6a.java</code>, include your version of <code>PrettyPrinter2.java</code> from Assignment 2 in the <code>hw3</code> folder. Then the file <code>Language_6a_Examples.java</code> should compile and run. The output from running this program should look exactly like <code>Language_6a_Examples_output_debug_0.txt</code> or <code>Language_6a_Examples_output_debug_1.txt</code>, depending on how you set the debug level. To help you with debugging, <code>Language_6a_Examples_output_debug_1.txt</code> includes all of the environment debugging output. It's a lot of text, but you might find it useful to trace how the environments are supposed to work in Language_6a. You get the interpreter to produce all this output by setting the static variable
+</p>
+<pre>
+       DEBUG = 1;
+</pre>
+<p>
+in the file <code>Evaluate_6a.java</code>.
+</p>
+
+<p>
+Also, make sure that you didn't break anything from Language_6. The program <code>Language_6_Examples.java</code> from the zip file should compile and run correctly and the program's output should look exactly like <code>Language_6_Examples_output_debug_0.txt</code> or <code>Language_6_Examples_output_debug_1.txt</code>.
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51530/handin.html">Turn in</a> a zip file called <code>CS51530Hw3Surname.zip</code> (where <code>Surname</code> is your last name) containing your versions of <code>Evaluate_6a.java</code> and <code>PrettyPrinter2.java</code> (just those two files). Be sure to put your name and email address in <b>every</b> file your turn in.
+</p>
+
+<p>
+This assignment is due Monday, March 8.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>

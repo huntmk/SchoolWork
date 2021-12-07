@@ -1,0 +1,851 @@
+0 =========================================
+(for (var i 1)
+     (<= i 8)
+     (set i (+ i 2))
+     (print i))
+
+for (var i = 1; i <= 8; i = i + 2)
+   print( i );
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->1, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->3, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->5, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->7, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->7, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->9, valueB->false]]
+||
+\/
+[Global Environment]
+
+result = [tag->bool, valueI->0, valueB->false]
+
+1 =========================================
+(prog (var i -1)
+      (for (set i 1)
+           (<= i 4)
+           (set i (+ i 1))
+           (print i))
+      (print i))
+
+Program
+{
+   var i = -1;
+   for (i = 1; i <= 4; i = i + 1)
+      print( i );
+   print( i );
+}
+
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->1, valueB->false]]
+
+[tag->int, valueI->1, valueB->false]
+[Local Environment]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->2, valueB->false]]
+
+[tag->int, valueI->2, valueB->false]
+[Local Environment]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->3, valueB->false]]
+
+[tag->int, valueI->3, valueB->false]
+[Local Environment]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->4, valueB->false]]
+
+[tag->int, valueI->4, valueB->false]
+[Local Environment]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->5, valueB->false]]
+
+[tag->int, valueI->5, valueB->false]
+result = [tag->int, valueI->5, valueB->false]
+
+2 =========================================
+(prog (var i 0)
+      (for (var i 1) (<= i 4) (+++ i) (print i))
+      (print i))
+
+Program
+{
+   var i = 0;
+   for (var i = 1; i <= 4; ++i)
+      print( i );
+   print( i );
+}
+
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[tag->int, valueI->1, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[tag->int, valueI->2, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[tag->int, valueI->3, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[tag->int, valueI->4, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->0, valueB->false]]
+
+[tag->int, valueI->0, valueB->false]
+result = [tag->int, valueI->0, valueB->false]
+
+3 =========================================
+(prog (var i -1)
+      (for (var i 0)
+           (< i 4)
+           (++ i)
+           (begin (var i 0) (print i)))
+      (print i))
+
+Program
+{
+   var i = -1;
+   for (var i = 0; i < 4; i++)
+   {
+      var i = 0;
+      print( i );
+   }
+   print( i );
+}
+
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->0, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->0, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->0, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->0, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->-1, valueB->false]
+result = [tag->int, valueI->-1, valueB->false]
+
+4 =========================================
+(prog (var x 100)
+      (var i -1)
+      (for (var i 0)
+           (< i 4)
+           (++ i)
+           (begin (var i 0)
+                  (print (+ x (+++ i)))))
+      (print i))
+
+Program
+{
+   var x = 100;
+   var i = -1;
+   for (var i = 0; i < 4; i++)
+   {
+      var i = 0;
+      print( x + ++i );
+   }
+   print( i );
+}
+
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->101, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->101, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->101, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->101, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ x = [tag->int, valueI->100, valueB->false]
+ i = [tag->int, valueI->-1, valueB->false]]
+
+[tag->int, valueI->-1, valueB->false]
+result = [tag->int, valueI->-1, valueB->false]
+
+5 =========================================
+(prog (for (var i 1) (<= i 5) (+++ i) (print i))
+      (print i))
+
+Program
+{
+   for (var i = 1; i <= 5; ++i)
+      print( i );
+   print( i );
+}
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->1, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->2, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->3, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->4, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment]
+
+[tag->int, valueI->5, valueB->false]
+[Local Environment
+ i = [tag->int, valueI->6, valueB->false]]
+||
+\/
+[Global Environment]
+
+EvalException: undefined variable: i
+6 =========================================
+(prog (var n 8)
+      (for (var i (- n 1))
+           (> i 0)
+           (--- i)
+           (set n (* i n)))
+      (print n))
+
+Program
+{
+   var n = 8;
+   for (var i = n - 1; i > 0; --i)
+      n = i * n;
+   print( n );
+}
+
+[Global Environment
+ n = [tag->int, valueI->8, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->7, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->8, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->7, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->56, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->6, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->56, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->6, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->336, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->336, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->1680, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->1680, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->6720, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->6720, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->20160, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->20160, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->40320, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->40320, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->40320, valueB->false]]
+
+[Local Environment
+ i = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->40320, valueB->false]]
+
+[tag->int, valueI->40320, valueB->false]
+result = [tag->int, valueI->40320, valueB->false]
+
+7 =========================================
+(prog (var n 420135)
+      (print n)
+      (var m 0)
+      (for (var d 0)
+           (> n 0)
+           (set n
+                (/ (- n d) 10))
+           (begin (set d (% n 10))
+                  (set m
+                       (+ (* 10 m) d))
+                  (print m)))
+      (print m))
+
+Program
+{
+   var n = 420135;
+   print( n );
+   var m = 0;
+   for (var d = 0; n > 0; n = (n - d) / 10)
+   {
+      d = n % 10;
+      m = 10 * m + d;
+      print( m );
+   }
+   print( m );
+}
+
+[Global Environment
+ n = [tag->int, valueI->420135, valueB->false]]
+
+[tag->int, valueI->420135, valueB->false]
+[Global Environment
+ n = [tag->int, valueI->420135, valueB->false]
+ m = [tag->int, valueI->0, valueB->false]]
+
+[Local Environment
+ d = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420135, valueB->false]
+ m = [tag->int, valueI->0, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420135, valueB->false]
+ m = [tag->int, valueI->0, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420135, valueB->false]
+ m = [tag->int, valueI->5, valueB->false]]
+
+[tag->int, valueI->5, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->5, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42013, valueB->false]
+ m = [tag->int, valueI->5, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42013, valueB->false]
+ m = [tag->int, valueI->5, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42013, valueB->false]
+ m = [tag->int, valueI->53, valueB->false]]
+
+[tag->int, valueI->53, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->3, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4201, valueB->false]
+ m = [tag->int, valueI->53, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4201, valueB->false]
+ m = [tag->int, valueI->53, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4201, valueB->false]
+ m = [tag->int, valueI->531, valueB->false]]
+
+[tag->int, valueI->531, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->1, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420, valueB->false]
+ m = [tag->int, valueI->531, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420, valueB->false]
+ m = [tag->int, valueI->531, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->420, valueB->false]
+ m = [tag->int, valueI->5310, valueB->false]]
+
+[tag->int, valueI->5310, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->0, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42, valueB->false]
+ m = [tag->int, valueI->5310, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42, valueB->false]
+ m = [tag->int, valueI->5310, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->42, valueB->false]
+ m = [tag->int, valueI->53102, valueB->false]]
+
+[tag->int, valueI->53102, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->2, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ m = [tag->int, valueI->53102, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ m = [tag->int, valueI->53102, valueB->false]]
+
+[Local Environment]
+||
+\/
+[Local Environment
+ d = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ m = [tag->int, valueI->531024, valueB->false]]
+
+[tag->int, valueI->531024, valueB->false]
+[Local Environment
+ d = [tag->int, valueI->4, valueB->false]]
+||
+\/
+[Global Environment
+ n = [tag->int, valueI->0, valueB->false]
+ m = [tag->int, valueI->531024, valueB->false]]
+
+[tag->int, valueI->531024, valueB->false]
+result = [tag->int, valueI->531024, valueB->false]
