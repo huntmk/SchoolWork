@@ -1,0 +1,162 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51530 - Homework 1</title>
+  <meta name="description" content="CS 51530 Homework 1">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51530.html">CS 51530</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://math.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 1<br>
+CS 51530<br>
+Programming Languages, Interpreters and Compilers<br>
+Spring, 2021
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw1.zip">zip file</a>.
+This assignment is due Monday, January 25.
+</p>
+
+<p>
+This assignment is an application of binary tree traversals. The main goal of this assignment is for you to write Java methods that "prettyprint" a binary tree into a string.
+</p>
+
+<p>
+In the zip file there are four incomplete files, <code>PrettyPrinter1.java</code>, <code>PrettyPrinter2.java</code>, <code>PrettyPrinter3.java</code> and <code>Hw1.java</code>. Your assignment is to complete the four incomplete files. In addition, the zip file includes three files, <code>BTree.java</code>, <code>Traverse.java</code>, and <code>PrettyPrinter0.java</code>, that are written for you and should not be modified.
+</p>
+
+<p>
+The term "prettyprint" usually means finding a way to represent a tree as a multi-line string. For example, this binary tree,
+<br>
+<img src="bTree1.png" alt="a binary tree" style="width:300px;" border="0">
+<br>
+can be represented by the following string,
+<pre>
+   (a (b d e) (c () (f (g () h) ())))
+</pre>
+</p>
+<p>
+which is not very easy to read. We can improve the readability of this string representation if we use multiple lines along with indentation.
+<pre>
+(a
+  (b
+    d
+    e
+  )
+  (c
+    ()
+    (f
+      (g
+        ()
+        h
+      )
+      ()
+    )
+  )
+)
+</pre>
+</p>
+<p>
+Notice that the root of a tree is printed right after an opening parenthesis, the two sub trees are printed below the root and slightly indented from it, and the closing parenthesis is printed on its own line just below its matching opening parenthesis. Also, the empty tree is treated as a special case and is represented by "()".
+</p>
+
+<p>
+This binary tree can also be represented by the following, more compact, multi-line string. In this string, small sub trees that have depth 1 are "inlined".
+<pre>
+(a
+  (b d e)
+  (c
+    ()
+    (f
+      (g () h)
+      ()
+    )
+  )
+)
+</pre>
+</p>
+
+<p>
+This representation can be made even more compact. In this string, the root of every left child is "inlined" with its parent's root.
+<pre>
+(a (b d e)
+   (c ()
+      (f (g () h)
+         ()
+      )
+   )
+)
+</pre>
+</p>
+
+<p>
+In the file <code>PrettyPrinter1.java</code>, complete the method <code>prettyPrinter()</code> so that it implements the first kind of prettyprinting described above. In the file <code>PrettyPrinter2.java</code>, complete the method <code>prettyPrinter()</code> so that it implements the second kind of prettyprinting described above. And in the file <code>PrettyPrinter3.java</code>, complete the method <code>prettyPrinter()</code> so that it implements the third kind of prettyprinting described above.
+</p>
+
+<p>
+In the zip file there are image files for five binary trees, the tree above and the four trees below.
+<br>
+<img src="bTree2.png" alt="a binary tree" style="width:300px;" border="0">
+<img src="bTree3.png" alt="a binary tree" style="width:300px;" border="0">
+<img src="bTree4.png" alt="a binary tree" style="width:300px;" border="0">
+<img src="bTree5.png" alt="a binary tree" style="height:400px;" border="0">
+<br>
+In the file <code>Hw1.java</code>, complete the Java declarations that instantiate binary trees that represent each of the binary trees in these image files (the first one is done for you). Then compile and run your program. The output of your program should look exactly like the contents of the file <code>output.txt</code> contained in the zip file.
+</p>
+
+<p>
+The three prettyprinting methods are, for the most part, a variation on a preorder traversal of the binary tree. First you prettyprint the root, then you (recursively) prettyprint the left sub tree, then (recursively) prettyprint the right sub tree. For the first prettyprinter, you need to think about three cases, the empty tree, a tree of just a single node, and a tree with more than one node. For the second prettyprinter, you need to consider four cases, an empty tree, a tree of a single node, a tree of depth one, and a tree of depth greater than one. For the third prettyprinter, you have the same four cases, but the root of the left child is always in-line with its parent's root (and be sure to keep opening and closing parentheses vertically aligned).
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51530/handin.html">Turn in</a> a zip file called <code>CS51530Hw1Surname.zip</code> (where <code>Surname</code> is your last name) containing your versions of <code>PrettyPrinter1.java</code>, <code>PrettyPrinter2.java</code>, <code>PrettyPrinter3.java</code> and <code>Hw1.java</code> Be sure to put your name and email address in <b>every</b> file you turn in.
+</p>
+
+<p>
+This assignment is due Monday, January 25.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>
