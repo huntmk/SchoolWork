@@ -1,0 +1,146 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51520 - Homework 3</title>
+  <meta name="description" content="CS 51520 Homework 3">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51520.html">CS 51520</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://cs.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 3<br>
+CS 51520<br>
+Operating Systems<br>
+Fall, 2021
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw3.zip">zip file</a>.
+</p>
+<p>
+This assignment is due Monday, November 29.
+</p>
+
+<p>
+This assignment is based on the examples from the zip file <a href="http://cs.pnw.edu/~rlkraft/cs51520/for-class/child-to-child-pipeline.zip">child-to-child-pipeline.zip</a>.
+You will write a Linux C program, called <code>hw3.c</code>, that implements a three stage pipeline.
+</p>
+
+<p>
+The <code>hw3.c</code> program should take exactly three command-line arguments which are the names of Linux executable programs.
+If the command-line for <code>hw3</code> looks like this,
+</p>
+<pre>
+      $ ./hw3  prog1  prog2  prog3
+</pre>
+<p>
+then the <code>hw3.c</code> program should build a three stage pipeline as shown in the following picture.
+</p>
+<article>
+<pre>
+                              hw3
+                          +----------+
+                          |          |
+   +--------------------->> 0      1 >>----------------------------------+
+   |                      |          |                                   |
+   |                      |        2 >>-------------------------------+  |
+   |                      |          |                                |  |
+---+                      +----------+                                |  +-->
+   |                                                                  |  |
+   |                                                                  |  |
+   |      prog1                   prog2                   prog3       |  |
+   |   +----------+            +----------+            +----------+   |  |
+   |   |          |    pipe    |          |    pipe    |          |   |  |
+   +-->> 0      1 >>-0======0->> 0      1 >>-0======0->> 0      1 >>-----+
+       |          |            |          |            |          |   |
+       |        2 >>--+        |        2 >>--+        |        2 >>--+-->
+       |          |   |        |          |   |        |          |   |
+       +----------+   |        +----------+   |        +----------+   |
+                      |                       |                       |
+                      +-----------------------+-----------------------+
+</pre>
+</article>
+<p>
+The <code>hw3</code> process should wait on the process <code>prog3</code> and when <code>prog3</code> terminates,
+<code>hw3</code> should print a brief message to stdout and then terminate.
+</p>
+
+
+<p>
+In the <a href="hw3.zip">zip file</a> there is a folder called "<code>filters</code>" that contains a number of simple filter programs that all read from <code>stdin</code> and write to <code>stdout</code>. They make good candidates for the programs in the filter stages. So, for example, you could test your version of <code>hw3.c</code> with a command-line like this.
+</p>
+<pre>
+      $ ./hw3  filters/double  filters/remove_vowels  filters/twiddle
+</pre>
+<p>
+Be sure to test your version of <code>hw3.c</code> with a command-line like this one.
+</p>
+<pre>
+      $ ./hw3 filters/double filters/remove_vowels filters/twiddle < hw3.html > temp.txt
+</pre>
+<p>
+That will run <code>hw3.c</code> with <code>hw3</code>'s <code>stdin</code> redirected to the file <code>hw3.html</code> and with <code>hw3</code>'s <code>stdout</code> redirected to the file <code>temp.txt</code>. If your <code>hw3.c</code> is written correctly, this command-line should put those two files on the ends of the pipeline and you should see the result of the pipeline stored in the file <code>temp.txt</code>
+</p>
+
+<p>
+Your <code>hw3</code> process should print a brief error message and terminate if there are not exactly three command-line arguments. Your <code>hw3.c</code> program should error check <em>all</em> Linux function calls (like <code>pipe</code>, <code>dup</code>, <code>fork</code>, <code>exec</code>).
+</p>
+
+<p>
+There are many ways that you can organize the code in your <code>hw3.c</code> program (just as we had several ways of organizing the code for creating a two-stage pipeline in the examples from <a href="http://cs.pnw.edu/~rlkraft/cs51520/for-class/child-to-child-pipeline.zip">child-to-child-pipeline.zip</a>). Create a document that explains the sequence of steps that your code takes to create the three-stage pipeline. The code that you end up writing in <code>hw3.c</code> will probably not be too easy to read. So your explanation document should clearly explain the steps your code takes. (Hint: A well written explanation will do a lot to help you write and debug your code.)
+</p>
+
+<p>
+If you use <a href="https://docs.microsoft.com/en-us/windows/wsl/">Windows Subsystem for Linux</a>, the Window's Task Manager may not help you much with seeing the Linux processes that your <code>hw3.c</code> program creates. The Linux commands <a href="https://man7.org/linux/man-pages/man1/pstree.1.html">pstree</a>, <a href="https://man7.org/linux/man-pages/man1/ps.1.html">ps</a>, and <a href="https://man7.org/linux/man-pages/man1/top.1.html">top</a> and be used in WSL to see the parent-child relationships of your Linux processes. In particular, try using top's <code>V</code> "<a href="https://man7.org/linux/man-pages/man1/top.1.html#4._INTERACTIVE_Commands">interactive command</a>", which shows a tree view of your processes.
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51520/handin.html">Turn in</a> a zip file called <code>CS51520Hw3Surname.zip</code> (where <code>Surname</code> is your last name) containing your version of <code>hw3.c</code> and your explanation document.
+</p>
+
+<p>
+This assignment is due Monday, November 29.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>
