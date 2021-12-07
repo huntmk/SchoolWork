@@ -1,0 +1,14 @@
+structA = {41, 42.430000, cats}
+structB = {pear, 51, 52.530000}
+structC = {62.630000, dogs, 61}
+structA2B =  {cats, 41, 42.430000}
+structA2C -> {42.430000, cats, 41}
+structB2C =  {52.530000, pear, 51}
+structC2A -> {61, 62.630000, dogs}
+arrayC[0] = {11.120000, abcd, 1}
+arrayC[1] = {12.130000, efgh, 2}
+arrayC[2] = {13.140000, ijkl, 3}
+arrayC[3] = {14.150000, mnop, 4}
+arrayC[4] = {15.160000, qrst, 5}
+arrayC[5] = {16.170000, uvwx, 6}
+arrayC[6] = {17.180000, yz@#, 7}
