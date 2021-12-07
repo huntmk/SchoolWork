@@ -4,3 +4,5 @@ CS_363 (Software Design Patterns):
   compotion-source (Assignment 2)
   Assignment 3
   Assignment 4
+
+Instructions for assignment are in each folder as pdfs.
