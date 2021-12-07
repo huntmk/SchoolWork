@@ -1,0 +1,372 @@
+0 =============================================
+(+ 1 false)
+
+(+ 1 false)
+
+1 + false
+
+EvalException: not a integer expression: false
+1 =============================================
+(+ true 2)
+
+(+ true 2)
+
+true + 2
+
+EvalException: not a integer expression: true
+2 =============================================
+(&& 1 false)
+
+(&& 1 false)
+
+1 && false
+
+EvalException: not a boolean expression: 1
+3 =============================================
+(|| false 0)
+
+(|| false 0)
+
+false || 0
+
+EvalException: not a boolean expression: 0
+4 =============================================
+(! (+ 1 1))
+
+(! (+ 1 1))
+
+!(1 + 1)
+
+EvalException: not a boolean expression: (+ 1 1)
+5 =============================================
+(+ x 2)
+
+(+ x 2)
+
+x + 2
+
+EvalException: undefined variable: x
+6 =============================================
+(var x (var x 2))
+
+(var x (var x 2))
+
+x = x = 2
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]]
+
+result = [tag->int, valueI->2, valueB->false]
+
+7 =============================================
+(prog (var x 0) (&& true x))
+
+(prog (var x 0) (&& true x))
+
+Program
+{
+   x = 0;
+   true && x;
+}
+
+[Global Environment
+ x = [tag->int, valueI->0, valueB->false]]
+
+EvalException: not a boolean expression: x
+8 =============================================
+(prog (var x 2) (var y x))
+
+(prog (var x 2) (var y x))
+
+Program
+{
+   x = 2;
+   y = x;
+}
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]
+ y = [tag->int, valueI->2, valueB->false]]
+
+result = [tag->int, valueI->2, valueB->false]
+
+9 =============================================
+(prog (var x 2) (var y 2) (var z (+ x y)))
+
+(prog (var x 2)
+      (var y 2)
+      (var z (+ x y)))
+
+Program
+{
+   x = 2;
+   y = 2;
+   z = x + y;
+}
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]
+ y = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]
+ y = [tag->int, valueI->2, valueB->false]
+ z = [tag->int, valueI->4, valueB->false]]
+
+result = [tag->int, valueI->4, valueB->false]
+
+10 =============================================
+(prog (var x 0) (var y 0) (var x (+ x 1)) (var y (+ x y)) (var x (+ x y 3)))
+
+(prog (var x 0)
+      (var y 0)
+      (var x (+ x 1))
+      (var y (+ x y))
+      (var x (+ x y 3)))
+
+Program
+{
+   x = 0;
+   y = 0;
+   x = x + 1;
+   y = x + y;
+   x = x + y + 3;
+}
+
+[Global Environment
+ x = [tag->int, valueI->0, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->0, valueB->false]
+ y = [tag->int, valueI->0, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->1, valueB->false]
+ y = [tag->int, valueI->0, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->1, valueB->false]
+ y = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->5, valueB->false]
+ y = [tag->int, valueI->1, valueB->false]]
+
+result = [tag->int, valueI->5, valueB->false]
+
+11 =============================================
+(prog (var x 4) (var y false) (|| y (== (+ 2 x) (* 2 3))))
+
+(prog (var x 4)
+      (var y false)
+      (|| y
+          (== (+ 2 x) (* 2 3))))
+
+Program
+{
+   x = 4;
+   y = false;
+   y || 2 + x == 2 * 3;
+}
+
+[Global Environment
+ x = [tag->int, valueI->4, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->4, valueB->false]
+ y = [tag->bool, valueI->0, valueB->false]]
+
+result = [tag->bool, valueI->0, valueB->true]
+
+12 =============================================
+(var z (+ (var x (var y 2)) (+ y (* 3 x))))
+
+(var z
+     (+ (var x (var y 2))
+        (+ y (* 3 x))))
+
+z = (x = y = 2) + (y + 3 * x)
+
+[Global Environment
+ y = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ y = [tag->int, valueI->2, valueB->false]
+ x = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ y = [tag->int, valueI->2, valueB->false]
+ x = [tag->int, valueI->2, valueB->false]
+ z = [tag->int, valueI->10, valueB->false]]
+
+result = [tag->int, valueI->10, valueB->false]
+
+13 =============================================
+(prog (var x 1) (+ (* 3 (var x (+ x 1))) (* 2 (var x (+ x 1)))))
+
+(prog (var x 1)
+      (+ (* 3
+            (var x (+ x 1)))
+         (* 2
+            (var x (+ x 1)))))
+
+Program
+{
+   x = 1;
+   3 * (x = x + 1) + 2 * (x = x + 1);
+}
+
+[Global Environment
+ x = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->2, valueB->false]]
+
+[Global Environment
+ x = [tag->int, valueI->3, valueB->false]]
+
+result = [tag->int, valueI->12, valueB->false]
+
+14 =============================================
+(prog (var n 1) (var x1 (* n n)) (var n 2) (var x2 (* n n)) (var n 3) (var x3 (* n n)) (var n 4) (var x4 (* n n)) (+ (+ (+ x1 x2) x3) x4) (+ x1 x2 x3 x4))
+
+(prog (var n 1)
+      (var x1 (* n n))
+      (var n 2)
+      (var x2 (* n n))
+      (var n 3)
+      (var x3 (* n n))
+      (var n 4)
+      (var x4 (* n n))
+      (+ (+ (+ x1 x2) x3)
+         x4)
+      (+ x1 x2 x3 x4))
+
+Program
+{
+   n = 1;
+   x1 = n * n;
+   n = 2;
+   x2 = n * n;
+   n = 3;
+   x3 = n * n;
+   n = 4;
+   x4 = n * n;
+   x1 + x2 + x3 + x4;
+   x1 + x2 + x3 + x4;
+}
+
+[Global Environment
+ n = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->1, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->2, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->2, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]
+ x2 = [tag->int, valueI->4, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->3, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]
+ x2 = [tag->int, valueI->4, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->3, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]
+ x2 = [tag->int, valueI->4, valueB->false]
+ x3 = [tag->int, valueI->9, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]
+ x2 = [tag->int, valueI->4, valueB->false]
+ x3 = [tag->int, valueI->9, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ x1 = [tag->int, valueI->1, valueB->false]
+ x2 = [tag->int, valueI->4, valueB->false]
+ x3 = [tag->int, valueI->9, valueB->false]
+ x4 = [tag->int, valueI->16, valueB->false]]
+
+result = [tag->int, valueI->30, valueB->false]
+
+15 =============================================
+(prog (var n 1) (var x (* n n)) (print x) (var n 2) (var x (+ x (* n n))) (print x) (var n 3) (var x (+ x (* n n))) (print x) (var n 4) (+ x (* n n)))
+
+(prog (var n 1)
+      (var x (* n n))
+      (print x)
+      (var n 2)
+      (var x
+           (+ x (* n n)))
+      (print x)
+      (var n 3)
+      (var x
+           (+ x (* n n)))
+      (print x)
+      (var n 4)
+      (+ x (* n n)))
+
+Program
+{
+   n = 1;
+   x = n * n;
+   print( x );
+   n = 2;
+   x = x + n * n;
+   print( x );
+   n = 3;
+   x = x + n * n;
+   print( x );
+   n = 4;
+   x + n * n;
+}
+
+[Global Environment
+ n = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->1, valueB->false]
+ x = [tag->int, valueI->1, valueB->false]]
+
+[tag->int, valueI->1, valueB->false]
+[Global Environment
+ n = [tag->int, valueI->2, valueB->false]
+ x = [tag->int, valueI->1, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->2, valueB->false]
+ x = [tag->int, valueI->5, valueB->false]]
+
+[tag->int, valueI->5, valueB->false]
+[Global Environment
+ n = [tag->int, valueI->3, valueB->false]
+ x = [tag->int, valueI->5, valueB->false]]
+
+[Global Environment
+ n = [tag->int, valueI->3, valueB->false]
+ x = [tag->int, valueI->14, valueB->false]]
+
+[tag->int, valueI->14, valueB->false]
+[Global Environment
+ n = [tag->int, valueI->4, valueB->false]
+ x = [tag->int, valueI->14, valueB->false]]
+
+result = [tag->int, valueI->30, valueB->false]

@@ -1,0 +1,114 @@
+
+        Language_3 with Increment and Spaceship Operators
+
+
+An expression with variables is defined by the following grammar.
+
+       Prog ::= Exp
+              | '(' 'prog' Exp+ ')'
+
+        Exp ::= PostInc
+              | PreInc
+              | PostDec
+              | PreDec
+              | Var
+              | Print
+              | AExp
+              | BExp
+              | INTEGER
+              | BOOLEAN
+              | VARIABLE
+
+    PostInc ::= '(' '++'  VARIABLE ')'
+    PostDec ::= '(' '--'  VARIABLE ')'
+     PreInc ::= '(' '+++' VARIABLE ')'
+     PreDec ::= '(' '---' VARIABLE ')'
+
+  Spaceship ::= '(' '<=>' Exp Exp ')'
+
+        Var ::= '(' 'var' VARIABLE Exp ')'
+
+      Print ::= '(' 'print' Exp ')'
+
+       AExp ::= '(' '+' Exp Exp* ')'
+              | '(' '-' Exp Exp? ')'
+              | '(' '*' Exp Exp+ ')'
+              | '(' '/' Exp Exp  ')'
+              | '(' '%' Exp Exp  ')'
+              | '(' '^' Exp Exp  ')'
+
+       BExp ::= '(' '||'  Exp Exp+ ')'
+              | '(' '&&'  Exp Exp+ ')'
+              | '(' '!'   Exp ')'
+              | '('  EqOp Exp Exp ')'
+              | '(' RelOp Exp Exp ')'
+
+       EqOp ::= '==' | '!='
+      RelOp ::= '<' | '>' | '<=' | '>='
+
+    INTEGER ::= [-|+][0-9]+
+    BOOLEAN ::= 'true' | 'false'
+   VARIABLE ::= [a-zA-Z][a-zA-Z0-9]*
+
+
+This language adds five operators to Language_3. Since everything else in the language is unchanged, we only need to define the semantics of these new operators.
+
+Four of the new operators are supposed to act similar to the '++' and '--' operators from C/C++/Java. However, we will define these four new operators for both the integer and boolean data types.
+
+The '++' operator does a post increment operation on a variable. That means that the interpreter, when it evaluates the '++' operator, first looks up in the environment the value of the variable and saves that value in a temporary location, then the interpreter updates the value of the variable in the environment to be one more than the temporary value, and then the interpreter returns the temporary value as the value of the '++' operator. In a kind of weird pseudo-code, here's what the semantics for '++' looks like for an integer variable.
+   (++ x)
+   {  temp = lookUp(x)
+      update(x, temp+1)
+      return temp
+   }
+Here's what the semantics for '++' looks like for a boolean variable (false increments to true, true increments to itself).
+   (++ x)
+   {  temp = lookUp(x)
+      update(x, true)
+      return temp
+   }
+
+The '+++' operator does a pre increment operation on a variable. That means that the interpreter, when it evaluates the '+++' operator, first looks up in the environment the value of the variable and saves that value in a temporary location, then the interpreter increments the value stored in the temporary location, then the interpreter updates the value of the variable in the environment to the value in the temporary location, and then the interpreter returns the temporary value as the value of the '+++' operator. Here's what the semantics for '+++' looks like for an integer variable.
+   (+++ x)
+   {  temp = lookUp(x)
+      temp = temp+1
+      update(x, temp)
+      return temp
+   }
+Here's what the semantics for '+++' looks like for a boolean variable.
+   (+++ x)
+   {  update(x, true)
+      return true
+   }
+
+The '--' and '---' operators are defined similarly (where true decrements to false, and false decrements to itself).
+
+It is an error to apply any of the four increment operators to a variable that has not already been defined.
+
+It is an error to apply any of the four increment operators to anything other than a variable (as with C/C++/C#/Java, etc.). So all of the following are errors.
+  (++ 5)
+  (--- true)
+  (+++ (+ x y))
+  (-- (++ x))
+
+
+The fifth operator is the three-way comparison ("spaceship") operator, '<=>'.
+https://en.wikipedia.org/wiki/Three-way_comparison#%22Spaceship_operator%22
+This operator takes two operands, either two integers or two booleans. It is a runtime error to apply this operator to a mixture of a boolean and an integer operand. Here's what the semantics for '<=>' looks like for integer operands.
+   (<=> x y)
+   {  if (x < y)
+         return -1
+      else if (x > y)
+         return +1
+      else
+         return 0
+   }
+Here's what the semantics for '<=>' looks like for boolean operands.
+   (<=> x y)
+   {  if (x == false && y == true)
+         return -1
+      else if (x == true && y == false)
+         return +1
+      else
+         return 0
+   }

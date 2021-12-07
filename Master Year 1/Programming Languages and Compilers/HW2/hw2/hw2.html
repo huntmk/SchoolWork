@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51530 - Homework 2</title>
+  <meta name="description" content="CS 51530 homework 2">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51530.html">CS 51530</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://math.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 2<br>
+CS 51530<br>
+Programming Languages, Interpreters and Compilers<br>
+Spring, 2021
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw2.zip">zip file</a>.
+This assignment is due Monday, February 15.
+</p>
+
+<p>
+This assignment is based on <a href="http://cs.pnw.edu/~rlkraft/cs51530/for-class/Language-3.zip">Language_3</a>. This is not a difficult assignment. It is meant to help you familiarize yourself with the interpreter code for Language_3.
+</p>
+
+<p>
+In the zip file there is a file <code>Language_3a.txt</code> that describes a new language. Language_3a adds five new operators to Language_3. Your assignment is to add code to the interpreter for Language_3 so that the new interpreter can handle the new operators.
+</p>
+
+<p>
+In the zip file there is the file <code>Evaluate_3a.java</code>. As distributed, this file is the interpreter for Language_3. Modify this file so that it handles the five new operators described in <code>Language_3a.txt</code>.
+</p>
+
+<p>
+In the zip file there is a prettyprinter for trees, <code>PrettyPrinter.java</code>. But this prettyprinter is very verbose. Write a prettyprinter, called <code>PrettyPrinter2.java</code>, that does the following.
+</p>
+<ol>
+<li>It always puts the left node inline with the root.
+<li>It handles the special case when depth==1 by putting everything inline with the root.
+<li>It handles the special case when depth==2 by putting everything inline with the root.
+<li>All non-inlined child nodes are vertically aligned with the left node.
+<li>All consecutive closing parentheses are at the end of a line.
+</ol>
+<p>
+In the zip file there are output files <code>Language_3_Examples_output.txt</code> and <code>Language_3a_Examples_output.txt</code>. Look at that them to get a idea of what the prettyprinter should produce.
+</p>
+
+<p>
+When you have finished implementing <code>Evaluate_3a.java</code> and <code>PrettyPrinter2.java</code>, then the file <code>Language_3a_Examples.java</code> should compile and run. The output from running this program should look exactly like the file <code>Language_3a_Examples_output.txt</code>. Also, make sure that you didn't break anything from Language_3. The program <code>Language_3_Examples.java</code> from the zip file should also compile and run correctly and the program's output should look exactly like the file <code>Language_3_Examples_output.txt</code> (every Language_3 expression is also a valid Language_3a expression).
+</p>
+
+<p>
+You can interactively test your interpreter by using the two shell scripts <code>build_all_classes.cmd</code> and <code>build_jar_file.cmd</code> to build a REPL from your interpreter. Those two scripts build a jar file, <code>Language_3a.jar</code>, and then the script <code>Language_3a.cmd</code> will run the jar file.
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51530/handin.html">Turn in</a> a zip file called <code>CS51530Hw2Surname.zip</code> (where <code>Surname</code> is your last name) containing your versions of <code>Evaluate_3a.java</code> and <code>PrettyPrinter2.java</code> (just those two files). Be sure to put your name and email address in <b>every</b> file your turn in.
+</p>
+
+<p>
+This assignment is due Monday, February 15.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>
