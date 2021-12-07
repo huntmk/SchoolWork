@@ -1,0 +1,5 @@
+(prog
+  (fun f (lambda x (* x x)))
+  (var h f)
+  (var r1 (apply h 2 3))  // wrong number of arguments for h
+  (var r2 (apply f 2 3))) // wrong number of arguments for f

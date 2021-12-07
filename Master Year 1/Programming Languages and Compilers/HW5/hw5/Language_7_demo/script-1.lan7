@@ -1,0 +1,6 @@
+// demonstrate composition of functions
+(prog
+  (var w 2)
+  (fun f (lambda x (* x x w)))
+  (fun g (lambda y (+ y y w)))
+  (var z (apply g (apply f 5))))  // function composition

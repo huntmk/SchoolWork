@@ -1,0 +1,5 @@
+// demonstrate a function with a non-local reference
+(prog
+   (var a 2)
+   (fun f (lambda x (+ x a))) // a is a non-local reference
+   (var r1 (apply f 3)))      // returns 5

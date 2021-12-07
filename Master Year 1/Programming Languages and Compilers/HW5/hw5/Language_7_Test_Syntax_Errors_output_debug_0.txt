@@ -1,0 +1,323 @@
+0 =========================================
+(var x)
+
+**** Analysis Error: wrong number of arguments for: var at line 1, position 2
+
+1 =========================================
+(set x)
+
+**** Analysis Error: wrong number of arguments for: set at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 6
+
+2 =========================================
+(var var 0)
+
+**** Analysis Error: keyword not allowed: var at line 1, position 6
+
+3 =========================================
+(set set 0)
+
+**** Analysis Error: keyword not allowed: set at line 1, position 6
+
+4 =========================================
+(var 0 0)
+
+**** Analysis Error: improper variable name: 0 at line 1, position 6
+
+5 =========================================
+(set 0 0)
+
+**** Analysis Error: improper variable name: 0 at line 1, position 6
+
+6 =========================================
+(var x 0 y)
+
+**** Analysis Error: wrong number of arguments for: var at line 1, position 2
+
+**** Analysis Error: undefined variable: y at line 1, position 10
+
+7 =========================================
+(set x 0 y)
+
+**** Analysis Error: wrong number of arguments for: set at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 6
+
+**** Analysis Error: undefined variable: y at line 1, position 10
+
+8 =========================================
+(fun f (lambda x x))
+
+**** Analysis Error: illegal expression: fun: at line 1, position 2
+
+9 =========================================
+(prog
+(what is this))
+
+**** Analysis Error: illegal expression: what: at line 2, position 2
+
+10 =========================================
+(prog
+(fun f))
+
+**** Analysis Error: wrong number of arguments for: fun at line 2, position 2
+
+11 =========================================
+(prog
+(fun 0 1))
+
+**** Analysis Error: improper function name: 0 at line 2, position 6
+
+**** Analysis Error: improper function definition: 1 at line 2, position 8
+
+12 =========================================
+(prog
+(fun f lambda))
+
+**** Analysis Error: improper function definition: lambda at line 2, position 8
+
+13 =========================================
+(prog
+(fun f x))
+
+**** Analysis Error: improper function definition: x at line 2, position 8
+
+14 =========================================
+(prog
+(fun f (what x y)))
+
+**** Analysis Error: improper function definition: what at line 2, position 9
+
+15 =========================================
+(prog
+(fun f (lambda 0) (lambda 1)))
+
+**** Analysis Error: illegal expression: lambda: at line 2, position 20
+
+16 =========================================
+(prog
+(fun true (lambda x y)))
+
+**** Analysis Error: keyword not allowed: true at line 2, position 6
+
+17 =========================================
+(prog
+(fun 1234 (lambda x y)))
+
+**** Analysis Error: improper function name: 1234 at line 2, position 6
+
+18 =========================================
+(prog
+(fun f
+(lambda if 0)))
+
+**** Analysis Error: keyword not allowed: if at line 3, position 9
+
+19 =========================================
+(prog
+(fun f
+(lambda 10 0)))
+
+**** Analysis Error: improper parameter name: 10 in lambda at line 3, position 9
+
+20 =========================================
+(prog
+(fun f
+(lambda  x if y (+ x y))))
+
+**** Analysis Error: keyword not allowed: if at line 3, position 12
+
+21 =========================================
+(prog
+(fun f
+(lambda  x 20 y (+ x y))))
+
+**** Analysis Error: improper parameter name: 20 in lambda at line 3, position 12
+
+22 =========================================
+(if true)
+
+**** Analysis Error: incorrect conditional expression at line 1, position 2
+
+23 =========================================
+(if true x)
+
+**** Analysis Error: incorrect conditional expression at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 10
+
+24 =========================================
+(if false 10 100 1000)
+
+**** Analysis Error: incorrect conditional expression at line 1, position 2
+
+25 =========================================
+(while true)
+
+**** Analysis Error: incorrect while expression at line 1, position 2
+
+26 =========================================
+(while true x y)
+
+**** Analysis Error: incorrect while expression at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 13
+
+**** Analysis Error: undefined variable: y at line 1, position 15
+
+27 =========================================
+(print x y)
+
+**** Analysis Error: wrong number of arguments for: print at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 8
+
+**** Analysis Error: undefined variable: y at line 1, position 10
+
+28 =========================================
+(print x y z)
+
+**** Analysis Error: wrong number of arguments for: print at line 1, position 2
+
+**** Analysis Error: undefined variable: x at line 1, position 8
+
+**** Analysis Error: undefined variable: y at line 1, position 10
+
+**** Analysis Error: undefined variable: z at line 1, position 12
+
+29 =========================================
+(if (print 0 1) (while false))
+
+**** Analysis Error: incorrect conditional expression at line 1, position 2
+
+**** Analysis Error: wrong number of arguments for: print at line 1, position 6
+
+**** Analysis Error: incorrect while expression at line 1, position 18
+
+30 =========================================
+(* 1)
+
+**** Analysis Error: wrong number of operands for: * at line 1, position 2
+
+31 =========================================
+(/ 1)
+
+**** Analysis Error: wrong number of operands for: / at line 1, position 2
+
+32 =========================================
+(% 1)
+
+**** Analysis Error: wrong number of operands for: % at line 1, position 2
+
+33 =========================================
+(^ 1)
+
+**** Analysis Error: wrong number of operands for: ^ at line 1, position 2
+
+34 =========================================
+(- 1 2 3)
+
+**** Analysis Error: wrong number of operands for: - at line 1, position 2
+
+35 =========================================
+(/ 1 2 3)
+
+**** Analysis Error: wrong number of operands for: / at line 1, position 2
+
+36 =========================================
+(% 1 2 3)
+
+**** Analysis Error: wrong number of operands for: % at line 1, position 2
+
+37 =========================================
+(^ 1 2 3)
+
+**** Analysis Error: wrong number of operands for: ^ at line 1, position 2
+
+38 =========================================
+(|| false)
+
+**** Analysis Error: wrong number of operands for: || at line 1, position 2
+
+39 =========================================
+(&& false)
+
+**** Analysis Error: wrong number of operands for: && at line 1, position 2
+
+40 =========================================
+(== 1)
+
+**** Analysis Error: wrong number of operands for: == at line 1, position 2
+
+41 =========================================
+(!= 1)
+
+**** Analysis Error: wrong number of operands for: != at line 1, position 2
+
+42 =========================================
+(<= 1)
+
+**** Analysis Error: wrong number of operands for: <= at line 1, position 2
+
+43 =========================================
+(>= 1)
+
+**** Analysis Error: wrong number of operands for: >= at line 1, position 2
+
+44 =========================================
+(<  1)
+
+**** Analysis Error: wrong number of operands for: < at line 1, position 2
+
+45 =========================================
+(>  1)
+
+**** Analysis Error: wrong number of operands for: > at line 1, position 2
+
+46 =========================================
+(== 1 2 3)
+
+**** Analysis Error: wrong number of operands for: == at line 1, position 2
+
+47 =========================================
+(!= 1 2 3)
+
+**** Analysis Error: wrong number of operands for: != at line 1, position 2
+
+48 =========================================
+(<= 1 2 3)
+
+**** Analysis Error: wrong number of operands for: <= at line 1, position 2
+
+49 =========================================
+(>= 1 2 3)
+
+**** Analysis Error: wrong number of operands for: >= at line 1, position 2
+
+50 =========================================
+(<  1 2 3)
+
+**** Analysis Error: wrong number of operands for: < at line 1, position 2
+
+51 =========================================
+(>  1 2 3)
+
+**** Analysis Error: wrong number of operands for: > at line 1, position 2
+
+52 =========================================
+(! true false)
+
+**** Analysis Error: wrong number of operands for: ! at line 1, position 2
+
+53 =========================================
+(- (* 1)
+   (/ 2 3 4) (% 5))
+
+**** Analysis Error: wrong number of operands for: - at line 1, position 2
+
+**** Analysis Error: wrong number of operands for: * at line 1, position 5
+
+**** Analysis Error: wrong number of operands for: / at line 2, position 5
+
+**** Analysis Error: wrong number of operands for: % at line 2, position 15

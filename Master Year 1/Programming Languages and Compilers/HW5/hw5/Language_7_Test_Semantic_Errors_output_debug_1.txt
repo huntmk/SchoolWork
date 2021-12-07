@@ -1,0 +1,768 @@
+0 =========================================
+x
+
+**** Analysis Error: undefined variable: x at line 1, position 1
+
+1 =========================================
+(set x 0)
+
+**** Analysis Error: undefined variable: x at line 1, position 6
+
+2 =========================================
+(set x y)
+
+**** Analysis Error: undefined variable: x at line 1, position 6
+
+**** Analysis Error: undefined variable: y at line 1, position 8
+
+3 =========================================
+(var x x)
+
+**** Analysis Error: undefined variable: x at line 1, position 8
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+4 =========================================
+(begin x)
+
+**** Analysis Error: undefined variable: x at line 1, position 8
+
+5 =========================================
+(begin (set x 0))
+
+**** Analysis Error: undefined variable: x at line 1, position 13
+
+6 =========================================
+(begin (set x y))
+
+**** Analysis Error: undefined variable: x at line 1, position 13
+
+**** Analysis Error: undefined variable: y at line 1, position 15
+
+7 =========================================
+(begin (var x x))
+
+**** Analysis Error: undefined variable: x at line 1, position 15
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+8 =========================================
+(begin (var x 0) (var x 1))
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 1, position 23
+
+9 =========================================
+(begin (var x 0) (var x y))
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 1, position 23
+
+**** Analysis Error: undefined variable: y at line 1, position 25
+
+10 =========================================
+(begin (var x x) (set x 0))
+
+**** Analysis Error: undefined variable: x at line 1, position 15
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+11 =========================================
+(prog
+x)
+
+**** Analysis Error: undefined variable: x at line 2, position 1
+
+12 =========================================
+(prog
+(set x 0))
+
+**** Analysis Error: undefined variable: x at line 2, position 6
+
+13 =========================================
+(prog
+(set x y))
+
+**** Analysis Error: undefined variable: x at line 2, position 6
+
+**** Analysis Error: undefined variable: y at line 2, position 8
+
+14 =========================================
+(prog
+(var x x))
+
+**** Analysis Error: undefined variable: x at line 2, position 8
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+15 =========================================
+(prog
+(var x 0)
+(var x 1))
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 3, position 6
+
+16 =========================================
+(prog
+(var x 0)
+(var x y))
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 3, position 6
+
+**** Analysis Error: undefined variable: y at line 3, position 8
+
+17 =========================================
+(prog
+(var x x)
+(set x 0))
+
+**** Analysis Error: undefined variable: x at line 2, position 8
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+18 =========================================
+(prog
+(begin
+x))
+
+**** Analysis Error: undefined variable: x at line 3, position 1
+
+19 =========================================
+(prog
+(begin
+(set x 0)))
+
+**** Analysis Error: undefined variable: x at line 3, position 6
+
+20 =========================================
+(prog
+(begin
+(set x y)))
+
+**** Analysis Error: undefined variable: x at line 3, position 6
+
+**** Analysis Error: undefined variable: y at line 3, position 8
+
+21 =========================================
+(prog
+(begin
+(var x x)))
+
+**** Analysis Error: undefined variable: x at line 3, position 8
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+22 =========================================
+(prog
+(begin
+(var x 0)
+(var x 1)))
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 4, position 6
+
+23 =========================================
+(prog
+(begin
+(var x 0)
+(var x y)))
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: x at line 4, position 6
+
+**** Analysis Error: undefined variable: y at line 4, position 8
+
+24 =========================================
+(prog
+(begin
+(var x x)
+(set x 0)))
+
+**** Analysis Error: undefined variable: x at line 3, position 8
+
+[Global Environment
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+25 =========================================
+(prog
+(var x 0)
+(begin
+(var x x)
+(print y)))
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+/\
+||
+[Local Analysis (begin) Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: y at line 5, position 8
+
+26 =========================================
+(while true
+ (print x))
+
+**** Analysis Error: undefined variable: x at line 2, position 9
+
+27 =========================================
+(prog
+(var x 0)
+(begin
+(while true
+  (print x))
+  (print y)))
+
+[Global Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: y at line 6, position 10
+
+28 =========================================
+(apply f 0)
+
+**** Analysis Error: undefined function name: f at line 1, position 8
+
+29 =========================================
+(begin
+(apply f 0))
+
+**** Analysis Error: undefined function name: f at line 2, position 8
+
+30 =========================================
+(prog
+(apply f 0))
+
+**** Analysis Error: undefined function name: f at line 2, position 8
+
+31 =========================================
+(prog
+(begin
+(apply f 0)))
+
+**** Analysis Error: undefined function name: f at line 3, position 8
+
+32 =========================================
+(prog
+(fun f (lambda 0))
+(var f true))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+/\
+||
+[Lambda Definition Environment
+
+**** Analysis Error: local variable already exists: f at line 3, position 6
+
+33 =========================================
+(prog
+(var f true)
+(fun f (lambda 0))
+false)
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+
+**** Analysis Error: local variable already exists: f at line 2, position 6
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+/\
+||
+[Lambda Definition Environment
+
+34 =========================================
+(prog
+(fun f (lambda 0))
+(fun f (lambda x 0))
+true)
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+
+**** Analysis Error: function already defined: f at line 3, position 6
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x 0)]
+/\
+||
+[Lambda Definition Environment
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+35 =========================================
+(prog
+(fun f (lambda x x 0))
+true)
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x x 0)]
+
+**** Analysis Error: repeated formal parameter: x at line 2, position 18
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x x 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+36 =========================================
+(prog
+(var y 0)
+(fun f (lambda x (* x y z)))
+true)
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y z))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y z))]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: z at line 3, position 25
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y z))]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+37 =========================================
+(prog
+(var x 0)
+(fun f (lambda y (+ x y z)))
+(var z 0)
+(apply f 1))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (+ x y z))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (+ x y z))]
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: z at line 3, position 25
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (+ x y z))]
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+/\
+||
+[Lambda Definition Environment
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (+ x y z))]
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ z = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+38 =========================================
+(prog
+(fun f (lambda x (apply f x)))
+(apply f x))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply f x))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply f x))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: x at line 3, position 10
+
+39 =========================================
+(prog
+(fun f (lambda x (apply g x)))
+(fun g (lambda y (apply f z)))
+(var z 2)
+(apply g 0))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply g x))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply g x))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (apply f z))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply g x))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (apply f z))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: z at line 3, position 27
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply g x))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (apply f z))]
+/\
+||
+[Lambda Definition Environment
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (apply g x))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (apply f z))]
+[ z = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+40 =========================================
+(prog
+(fun f (lambda x (* x x)))
+(var h f)
+(apply h x))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+[ h = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: x at line 4, position 10
+
+41 =========================================
+(prog
+(fun f (lambda x (* x y)))
+(fun g (lambda y (var y x)))
+true)
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (var y x))]
+
+**** Analysis Error: undefined variable: y at line 2, position 23
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (var y x))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: local variable already exists: y at line 3, position 23
+
+**** Analysis Error: undefined variable: x at line 3, position 25
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (var y x))]
+/\
+||
+[Lambda Definition Environment
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+42 =========================================
+(prog
+(fun f (lambda 0))
+(apply f 0))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda 0)]
+/\
+||
+[Lambda Definition Environment
+
+**** Analysis Error: too many actual parameters: f at line 3, position 8
+
+43 =========================================
+(prog
+(fun f (lambda x 0))
+(apply f 0 1))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too many actual parameters: f at line 3, position 8
+
+44 =========================================
+(prog
+(fun f (lambda x y z 0))
+(apply f 1))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ z = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too few actual parameters: f at line 3, position 8
+
+45 =========================================
+(prog
+(fun f (lambda x y z 0))
+(apply f 1 2))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ z = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too few actual parameters: f at line 3, position 8
+
+46 =========================================
+(prog
+(fun f (lambda x y z 0))
+(apply f 1 2 3 4))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y z 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ z = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too many actual parameters: f at line 3, position 8
+
+47 =========================================
+(prog
+(fun f (lambda x x 0))
+(apply f 1))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x x 0)]
+
+**** Analysis Error: repeated formal parameter: x at line 2, position 18
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x x 0)]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too few actual parameters: f at line 3, position 8
+
+48 =========================================
+(prog
+(fun f (lambda (apply f)))
+(apply f 1))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda (apply f))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda (apply f))]
+/\
+||
+[Lambda Definition Environment
+
+**** Analysis Error: too many actual parameters: f at line 3, position 8
+
+49 =========================================
+(prog
+(fun f (lambda x (* x x)))
+(var h f)
+(apply h x x))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x (* x x))]
+[ h = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: x at line 4, position 10
+
+**** Analysis Error: undefined variable: x at line 4, position 12
+
+50 =========================================
+(prog
+(fun f (lambda x y (* x y)))
+(var h f)
+(apply h x))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ h = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: x at line 4, position 10
+
+51 =========================================
+(prog
+(fun f (lambda x y (* x y)))
+(var h f)
+(apply h 0)
+(apply f 0))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ h = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: too few actual parameters: f at line 5, position 8
+
+52 =========================================
+(prog
+(fun f (lambda x y (* x y)))
+(fun g (lambda y (* y y)))
+(begin
+(var f g)
+(apply f x)))
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (* y y))]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (* y y))]
+/\
+||
+[Lambda Definition Environment
+[ x = [tag->bool, valueI->0, valueB->false, valueL->null]
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (* y y))]
+/\
+||
+[Lambda Definition Environment
+[ y = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+[Global Environment
+[ f = [tag->lambda, valueI->0, valueB->false, valueL->(lambda x y (* x y))]
+[ g = [tag->lambda, valueI->0, valueB->false, valueL->(lambda y (* y y))]
+/\
+||
+[Local Analysis (begin) Environment
+[ f = [tag->bool, valueI->0, valueB->false, valueL->null]
+
+**** Analysis Error: undefined variable: x at line 6, position 10

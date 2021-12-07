@@ -1,0 +1,10 @@
+(prog
+  (fun f (lambda x   (* x x)))
+  (fun g (lambda x y (* x y)))
+  (begin
+    (var temp f)    // swap f and g
+    (var f g)
+    (var g temp)
+    (begin
+      (var r1 (apply f 2 3))    // correct number of arguments
+      (var r2 (apply g 2 3))))) // incorrect number of arguments

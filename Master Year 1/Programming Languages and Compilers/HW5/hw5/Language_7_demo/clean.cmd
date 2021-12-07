@@ -1,0 +1,2 @@
+del *.dot
+del *.png

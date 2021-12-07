@@ -1,0 +1,187 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 51530 - Homework 5</title>
+  <meta name="description" content="CS 51530 Homework 5">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://math.pnw.edu/~rlkraft/roger-v2.css">
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://math.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list" role="navigation">
+    <li><a href="../cs51530.html">CS 51530</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list" role="navigation">
+    <li><a href="http://math.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 5<br>
+CS 51530<br>
+Programming Languages, Interpreters and Compilers<br>
+Spring, 2021
+</h1>
+
+<p>
+This assignment makes use of files contained in this <a href="hw5.zip">zip file</a>.
+</p>
+
+<p>
+This assignment is due Monday, April 26.
+</p>
+
+<p>
+This assignment is based on <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>. In this assignment you will add a static analyzer to Language_7.
+</p>
+
+<p>
+In the interpreter for <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>, there are 38 places in the code where the interpreter does a "runtime check" for some condition that should or shouldn't hold (search <code>Evaluate.java</code> for the string <code>"// runtime check"</code>). Runtime checks slow the interpreter down, and an important aspect of programming languages is to try and minimize the number of runtime checks that an interpreter needs. Many of the runtime checks in the Language_7 interpreter are due to two aspects of our code. We do not have a proper parser and we do not have a static analyzer. In this assignment you will write a static analyzer for Language_7. This will eliminate the need for many of the runtime checks in Language_7's interpreter (the runtime checks that remain in the interpreter are almost all runtime type checks).
+</p>
+
+<p>
+In <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>, the abstract syntax tree for a program is build by the file <code>ParseTree.java</code>. But this is not really a parser for Language_7, it is a parser for Language_0, the "tree language" from the very beginning of the semester. Language_7 is a sub-language of Language_0 (so Language_7 is a tree language) so <code>ParseTree.java</code> can parse Language_7. But <code>ParseTree.java</code> knows nothing about the details of language_7, like the fact that an if-expression must have three branches, or a function definition must include a lambda expression. In <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a> these details are checked at runtime by the interpreter. A proper parser for Language_7 would eliminate the need for these kinds of runtime checks in the interpreter.
+</p>
+
+<p>
+A proper parser eliminates a lot of runtime checks in the interpreter, but not all of them. The kind of languages we are parsing are called <a href="https://en.wikipedia.org/wiki/Context-free_language">context-free languages</a>. When a language is "context-free", that roughly means that the correctness of a piece of the language, like a var-expression or a set-expression, does not depend on where in the program that piece appears. So
+</p>
+<pre>
+      (set x y)
+</pre>
+<p>
+is syntactically correct. But we have a language rule that you cannot use a variable before it is declared. A rule like that is a "context rule," and context rules cannot be determined by <a href="https://en.wikipedia.org/wiki/Context-free_grammar">context-free grammars</a> and so they cannot be enforced by a parser. In <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>, context rules like this are enforced by runtime checks in the interpreter. It turns out that some violations of these kinds of context rules can be determined "<a href="https://en.wikipedia.org/wiki/Static_program_analysis">statically</a>" by a "<a href="https://en.wikipedia.org/wiki/Semantic_analysis_(compilers)">semantic analyzer</a>". We say "statically" (as apposed to "dynamically") because we analyze the program without needing to run (or execute) it. And we say "semantic" because we are checking rules that enforce aspects of the meaning of a program (like, "a variable does not exist before it has been declared" or "a function application should have the same number of arguments as the function's definition has parameters").
+</p>
+
+<p>
+In this assignment you will write a static analyzer for language_7 that catches most of the syntax errors that a parser would detect and also catches many of the semantic errors that a parser cannot detect.
+</p>
+
+<p>
+In the <a href="hw5.zip">zip file</a> the file <code>StaticAnalysis.java</code> outlines the code needed to perform syntactic and static analysis of a program from Language_7. You need to complete <code>StaticAnalysis.java</code> so that it can find all errors contained in the files <code>Language_7_Test_Syntax_Errors.java</code> and <code>Language_7_Test_Semantic_Errors.java</code>. The file <code>Language_7_Test_Syntax_Errors.java</code> tests for the context free errors that could be found by a parser. The file <code>Language_7_Test_Semantic_Errors.java</code> tests for context sensitive errors that cannot be found by a parser. The errors in <code>Language_7_Test_Syntax_Errors.java</code> are easier to detect and the code needed to check for these errors can mostly be copied from the (previous) interpreter for <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>. The errors in <code>Language_7_Test_Semantic_Errors.java</code> are harder to detect and the code needed to check for these errors can be modeled on, but not necessarily copied from, the code in the (previous) <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a> interpreter.
+</p>
+
+<p>
+A common programming error is to reference a variable that has not been declared (for example, you might misspell a variable name when you are trying to reference it). Another is to re-declare a variable in the same scope. An interpreter is not a good tool for finding these kinds of errors. First of all, there are parts of the program text that the interpreter might rarely see. For example, the interpreter may not traverse the else-clause of an if-expression because the else-clause is meant to handle a rarely occurring error condition. You can check by using the <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a> REPL that the following  expression will evaluate without error since the undeclared variable <code>y</code> does not get looked at (change <code>true</code> to <code>false</code> and the expression will cause a runtime error).
+</p>
+<pre>
+      (var x (if true 1 y))
+</pre>
+<p>
+A second reason an interpreter is bad for finding undeclared (and re-declared) variables is that the interpreter may not find one until after the program has been running for a long time. The resulting error, and the halting of the interpreter, will find the undeclared or re-declared variable, but at the cost of much wasted time.
+</p>
+
+<p>
+In a statically scoped language, it is possible to find all undeclared variables in a program without having to run the program (this is not true for <a href="https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scope_vs._dynamic_scope">dynamically scoped languages</a>; for those languages, you must execute the program to find undeclared variables). One job of your <code>StaticAnalysis.java</code> program is to find all undeclared variable references (and function names) in a program and all re-declarations of previously declared variables (and function names).
+</p>
+
+<p>
+In the <a href="hw5.zip">zip file</a> the file <code>StaticAnalysis.java</code> outlines the code needed to perform syntactic and static analysis of a program from Language_7. You need to complete <code>StaticAnalysis.java</code> so that it can find all references to undeclared variables, all re-declarations of existing variables (within the same scope as the original declaration), all undeclared function names, all re-declarations of (global) function names, and all repeated parameters in a lambda expression. In addition, your program should check the agreement between the number of actual parameters and the number of formal parameters when an apply-expression applies a globally defined function name defined by <code>fun</code>. For example, the following code has an incorrect application of function <code>h</code>, but your static analyzer need not detect this error (the interpreter will detect it at runtime). On the other hand, your static analyzer should detect the incorrect application of function <code>f</code>.
+</p>
+<pre>
+      (prog
+         (fun f (lambda x (* x x)))
+         (var h f)
+         (apply h 1 2)) // wrong number of arguments for h
+         (apply f 1 2)  // wrong number of arguments for f
+</pre>
+<p>
+Be careful about an example like the following code. The function applications use global function names that have local redefinitions that hide the global definitions. In this case, one function application has the correct number of arguments and the other one doesn't. Your code does not need to check either of these function applications (the interpreter will check them at runtime). The <code>Environment</code> class has methods <code>defined()</code> and <code>definedGlobal()</code> that you can use to distinguish which function applications you need to check. (Interesting question: How do the C, C++ and Java compilers catch errors like this?)
+</p>
+<pre>
+      (prog
+         (fun f (lambda x   (* x x)))
+         (fun g (lambda x y (* x y)))
+         (begin
+           (var temp f)    // swap f and g
+           (var f g)
+           (var g temp)
+           (apply f 1 2))  // correct number of arguments
+           (apply g 1 2))) // incorrect number of arguments
+</pre>
+
+<p>
+It is very useful to notice that the <code>StaticAnalysis.java</code> program is structured the same way as the interpreter, <code>Evaluate.java</code>. They use a "syntax driven" structure with one method for every production in the grammar (so the grammar of the language becomes a table of contents to each of these program's code). The methods in the interpreter have names like <code>evaluateApply()</code> and <code>evaluateWhile()</code>. The methods in <code>StaticAnalysis.java</code> have names like <code>analyzeApply()</code> and <code>analyzeWhile()</code>.
+</p>
+
+<p>
+The analysis methods in <code>StaticAnalysis.java</code> are all <code>boolean</code> methods. Each method should print, to stdout, an appropriate error message whenever it finds a syntax or semantic error (the analysis methods should not throw any exceptions). An analysis method should return <code>true</code> if it does not find any errors and it should return <code>false</code> if finds at least one error. Whenever an analysis method detects an error, it should print an error message and then continue to analyze the remaining code (similar to how a compiler does not stop when it finds a compile time error). Notice that a single call to an analysis method could find several errors. For example, if both <code>x</code> and <code>y</code> are undeclared variables, then a call to <code>analyzeSet()</code> for this code,
+</p>
+<pre>
+      (set x y)
+</pre>
+<p>
+should produce two "undeclared variable" error messages, one for each variable. Similarly, if <code>x</code> is already declared and <code>y</code> is undeclared, then a call to <code>analyzeVar()</code> for this code,
+</p>
+<pre>
+      (var x y)
+</pre>
+<p>
+should produce two error messages, a "previously declared variable" error message for <code>x</code> and an "undeclared variable" error message for <code>y</code>. In the zip file there is a test program, <code>Language_7_Test_Semantic_Errors.java</code>, with its output, that demonstrates a large number of semantic errors and their error messages.
+</p>
+
+<p>
+Most of the code for <code>StaticAnalysis.java</code> can be found in <code>Evaluate.java</code> from <a href="http://math.pnw.edu/~rlkraft/cs51530/for-class/Language-7.zip">Language_7</a>. The static analyzer acts very much like an interpreter, but it doesn't need to fully evaluate a program. For example, the method <code>analyzeWhile()</code> needs to analyze each expression in the body of the while-loop, but it does not need to execute the loop. As another example, the static analyzer needs to use global and local <code>Environment</code> objects to keep track of which variables have been declared, but the analyzer does not need to keep track of the value of any variable (except for function names defined by <code>fun</code>). In my code, whenever my static analyzer needs to put a variable into an <code>Environment</code> object, I always give the variable the value <code>new Value(false)</code> (except for function names defined by <code>fun</code>).
+</p>
+
+<p>
+I have defined a few of the methods for you in <code>StaticAnalysis.java</code>. I suggest that you start with the arithmetic and boolean productions; these are the easiest. Then write (and test) other fairly simple productions like <code>If</code>, <code>While</code> and <code>Print</code>. Then work on the important <code>Var</code> and <code>Set</code> productions. These need to use environments, so they are more complicated that the previous productions. Write (and test) the code for each of those two productions. Leave the hardest productions, <code>Apply</code>, <code>Fun</code>, <code>Lambda</code>, for last.
+</p>
+
+<p>
+The biggest difference between <code>StaticAnalysis.java</code> and <code>Evaluate.java</code> is that the body of a function definition is analyzed as part of the analysis of the function declaration, <b>not</b> as part of a function application. So the code for <code>analyzeFun()</code> looks a lot like the code from <code>evaluateApply()</code> (and the code for <code>analyzeApply()</code> is actually similar to <code>analyzeSet()</code>).
+</p>
+
+<p>
+In the zip file there is an interactive REPL of Language_7, called <code>Language_7_demo.jar</code>, with all the static analysis enabled. You can run the REPL by double clicking on the file <code>Language_7_demo.cmd</code>. You can also run Language_7 script files by dragging and dropping them onto <code>Language_7_demo.cmd</code>. Experimenting with the demo version of the REPL will give you a good idea of what kind of syntax and semantic errors your code should be able to detect. When your version of <code>StaticAnalysis.java</code> is complete, you can build your own REPL by compiling the file <code>Language_7.java</code>.
+</p>
+
+<p>
+Look at the beginning of each of the class files <code>Evaluate.java</code> and <code>StaticAnalysis.java</code> and you will see that they each declares a global <code>Environment</code> object. The analyzer uses its global environment to keep track of declared variables and functions. The evaluator uses its global environment object to keep track of the state of a running program. One tricky aspect of this code is that the REPL needs to instantiate both a global analysis environment and a global interpreter environment. When you type an expression into the REPL, it first uses the global analysis environment (with the analyzer) to analyze the expression, and then if the expression passes its analysis, the REPL uses the global interpreter environment to evaluate the expression. This trickiness is taken care of for you in the REPL code from <code>Language_7.java</code>.
+</p>
+
+<p>
+When you run the test programs (or the demo program) you will see that the error messages contain line numbers. This is so that the error messages are unambiguous. Notice in the <code>Token.java</code> file that each token contains its line number and character position from the original source string. Notice in the <code>Tree.java</code> file that each tree node in the AST holds a token. To get a reference to the token in a tree node, call the node's <code>getToken()</code> method. To get the string in a tree node, you can either call the node's <code>getElement()</code> method or you can access the token's <code><a href="https://en.wikipedia.org/wiki/Lexical_analysis#Lexeme">lexeme</a></code> field.
+</p>
+
+<p>
+<a href="http://cs.pnw.edu/~rlkraft/cs51530/handin.html">Turn in</a> a zip file called <code>CS51530Hw5Surname.zip</code> (where <code>Surname</code> is your last name) containing your version of <code>StaticAnalysis.java</code>. Be sure to put your name and email address in <b>every</b> file your turn in.
+</p>
+
+<p>
+This assignment is due Monday, April 26.
+</p>
+
+</section>
+
+<footer>
+  <script language="JavaScript" type="text/javascript">
+    document.write("<font size=\"-2\"><i>Last modified on " + document.lastModified + ".<\/i><\/font>");
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><font size="-2"><i>compliments and criticisms</i></font></a>
+</footer>
+
+</body>
+</html>

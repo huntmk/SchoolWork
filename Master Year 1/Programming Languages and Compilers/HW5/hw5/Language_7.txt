@@ -1,0 +1,176 @@
+
+     A Language of Expressions with Global First Class Functions
+
+
+An expression in this language is defined by the following grammar.
+
+       Prog ::= Exp
+              | '(' 'prog' (Fun | Exp)* Exp ')'
+
+        Fun ::= '(' 'fun' VARIABLE Lambda ')'   // a function declaration
+
+     Lambda ::= '(' 'lambda' VARIABLE* Exp ')'  // formal parameters followed by function body
+
+        Exp ::= Apply
+              | If
+              | While
+              | Begin
+              | Var
+              | Set
+              | Print
+              | AExp
+              | BExp
+              | INTEGER
+              | BOOLEAN
+              | VARIABLE
+
+      Apply ::= '(' 'apply' Exp Exp* ')'  // function value followed by actual parameters
+
+         If ::= '(' 'if' Exp Exp Exp ')'
+
+      While ::= '(' 'while' Exp Exp ')'
+
+      Begin ::= '(' 'begin' Exp+ ')'
+
+        Var ::= '(' 'var' VARIABLE Exp ')'
+
+        Set ::= '(' 'set' VARIABLE Exp ')'
+
+      Print ::= '(' 'print' Exp ')'
+
+       BExp ::= '(' '||'  Exp Exp+ ')'
+              | '(' '&&'  Exp Exp+ ')'
+              | '(' '!'   Exp ')'
+              | '('  EqOp Exp Exp ')'
+              | '(' RelOp Exp Exp ')'
+
+       EqOp ::= '==' | '!='
+      RelOp ::= '<' | '>' | '<=' | '>='
+
+       AExp ::= '(' '+' Exp Exp* ')'
+              | '(' '-' Exp Exp? ')'
+              | '(' '*' Exp Exp+ ')'
+              | '(' '/' Exp Exp  ')'
+              | '(' '%' Exp Exp  ')'
+              | '(' '^' Exp Exp  ')'
+
+    INTEGER ::= [-|+][0-9]+
+    BOOLEAN ::= 'true' | 'false'
+   VARIABLE ::= [a-zA-Z][a-zA-Z0-9]*
+
+
+The above syntax adds three new syntactic terms to Language_6 (Fun, Lambda, Apply) and the language makes a slight change in the Prog expression. These changes allow us to define and call global functions. Notice that Apply is the only one of the new syntactic terms that is an expression.
+
+Since everything else about the language is unchanged, the only thing that we need to specify here is the semantics of the three new syntactic terms, Fun, Lambda, and Apply. Basically, Fun and Lambda allow us to define (global) functions and the Apply expression allows us to call those functions.
+
+First let us give an overview of the Fun and Lambda terms. The definition (or declaration) of a function is done with a combination of Fun and Lambda. Here is how we would define the squaring function.
+
+   (fun square (lambda x (* x x)))
+
+The keyword 'fun' tells the interpreter that the name 'square' is to be used to name a function, or, to put it another way, that the value of the variable 'square' is a "function value". The keyword 'lambda' begins the real definition of the function (the "value" of the variable 'square'). A Lambda is a function value. It represents a "function abstraction." It includes a list of the function's formal parameters and a function body (notice that a Lambda does not include a function name). A Lambda with two formal parameters is written in our language like this,
+
+   (lambda x y (+ x y))
+
+and in C/Java like notation, this lambda would look something like this (notice that there's no function name).
+
+   (var x y)
+   {
+      return x + y;
+   }
+
+Notice how this includes a list of the function's formal parameters and a definition for the function's body, but NO function name. In a sense, a lambda is an anonymous function abstraction. It tells you exactly what the function does, but it does not give the function a name.
+
+The squaring function (with the name 'square'),
+
+   (fun square (lambda x (* x x)))
+
+would look something like this in C/Java notation
+
+   fun square (var x)
+   {
+      return x * x;
+   }
+
+Once again, notice that Fun's job is to give the Lambda, the function value, (lambda x (* x x )), a name. What we are really doing with the Fun and Lambda syntactic terms is separating the naming of a function from the actual function abstraction. This separation is common in functional programming languages but it is not part of the C\C++\Java languages. But as we will see latter on, "anonymous function values" (i.e., lambda expressions) are an important part of modern programming languages. So important that C++ and Java have both recently added a kind of "lambda expression" in their languages. For example, see any of the following references.
+https://smartbear.com/blog/develop/c11-tutorial-lambda-expressions-the-nuts-and-bolts/
+https://docs.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=vs-2019
+https://docs.microsoft.com/en-us/cpp/cpp/lambda-expression-syntax?view=vs-2019
+http://openjdk.java.net/projects/lambda/
+https://dzone.com/articles/why-we-need-lambda-expressions
+http://www.lambdafaq.org/
+
+The interpreter handles a Fun term in a manner very similar to how it handles Var. Var declares a variable whose value is an integer or a boolean. Fun declares a variable whose value is a function abstraction (a lambda expression). In both cases, there is a name for a new entity and a value that is stored in the entity (either an integer value, a boolean value, or a function value). In the case of Var, the association between the variable and its value is held in some Environment object in the environment chain. In the case of Fun, the function's name is associated with its Lambda, and this association is held in an Environment object, but in the case of Fun, the environment object must be the global environment object (all functions are global functions).
+
+
+Here is an interesting way to think of the change from Language_6 to Language_7. Language_7 adds a new kind of value to Language_6, a "function value". In Language_6, a variable can hold only two kinds of values, integer values or boolean values. So
+   (var f 5)
+makes f a variable that holds an integer value, while
+   (var f true)
+makes f a variable that holds a boolean value. In Language_7
+   (fun f (lambda x (* x x)))
+makes f a variable that holds a "function value". In Language_7 we must use a special keyword for defining variables with function values since we need to restrict function declarations to the global level (the 'var' declaration can be anywhere in a program, but 'fun' can only be used in a 'prog'). Except for the restriction that 'fun' can only be used at the global level, 'fun' otherwise acts just like 'var', it adds a <name, value> pair to an Environment object. And the value 'fun' adds is a 'lambda' value. The fact that we are adding a new kind of value to the language shows up in the Value class. The Value class in language_6 had two kinds of tags. The Value class in Language_7 has three kinds of tags.
+
+It's important to realize that any expression can return any one of the three kinds of values. In particular, an expression can evaluate to a function value. Consider this example.
+   (fun g (lambda x (* x x)))
+   (fun h (lambda x (* x x x)))
+   (var b true)
+   (apply (if b g h) 5)  ==> 25 
+   (set b false)
+   (apply (if b g h) 5)  ==> 125 
+In this code, the two if-expressions evalute to function values which can be applied (called).
+   
+In Language_7, all three kinds of values, integer, boolean, and function, are "first class" values. This means that we can pass these kinds of values into function parameters or return these kinds of values as function return values. Passing and returning integers or booleans to and from functions is not a new idea. But you may not have thought about passing functions to and from other functions. Here is a simple example of a function with a function parameter.
+   (fun f (lambda g x (apply g x)))
+In this definition of f, g is a function parameter to f and f applies g to f's other parameter. Here are some examples using f. (Don't confuse the g below with the g in f's definition. How are the two g's different?)
+   (fun g (lambda x (* x x)))
+   (fun h (lambda x (* x x x)))
+   (apply f g 5)  ==> 25
+   (apply f g 7)  ==> 49
+   (apply f h 5)  ==> 125
+
+Here is an example of a function with a function return value.
+   (fun f1 (lambda x (+ x 1))
+   (fun f2 (lambda x (+ x 2))
+   (fun g  (lambda n (if (== 0 (% n 2)) f2 f1)))
+The function g returns either the function f1 or the function f2. If the input to g is an even number, than g returns f2. If the input to g is an odd number, than g returns f1. We might use g the following way.
+   (apply (apply g 4) 7)  ==> 9
+   (apply (apply g 5) 7)  ==> 8
+Notice how the return value from g, which is a function, is itself applied to an input.
+
+
+Now for some details about the semantics of the new terms. We begin with the changes in the semantics of the Prog expression.
+
+When the Prog expression is evaluated, the interpreter will create an empty Environment object. The interpreter will then either evaluate the single Exp expression, or the interpreter will traverse the list of Exp's and Fun's under the Prog expression. Any Exp that does not have a side effect is kind of pointless. Any Var expressions or Fun terms will modify the global variable Environment object. The value of a Prog expression is the value of its last Exp expression.
+
+A Fun term has the side effect of adding a <name, value> entry to the global Environment object. A Fun term uses the Lambda that it contains to produce a Value object which has a tag field containing "lambda" and a value field that is a reference to the function's lambda expression Tree.
+
+A Lambda term is really a new kind of value in this language, a "function value". One of the most important aspects of this language is to get used to the idea of considering a function as a new kind of value that can be stored in a variable.
+
+Since a Lambda is really a new kind of value, we must modify the Value class so that an instance of Value can hold one of these new kinds of values. We give the Value class a new tag, LAMBDA_TAG, and a new field, valueL, which is a reference to the Tree data structure that is a parsed Lambda expression.
+
+It is an error to declare a function name twice within the Prog term.
+
+The grammar does not allow 'fun' to be used anywhere other than in a 'prog'.
+
+
+Apply is the most complicated of the new syntactic terms. Apply is what allows us to "call" a function and get the function's return value. Apply is an expression that returns the return value of the called function. Here is a description of the steps that the interpreter takes to implement Apply.
+
+When the interpreter evaluates Apply, the first thing the interpreter does is create a new Environment object and link its nonLocalLink to the global environment (NOT to the current environment chain; the calling of a function creates a NEW environment chain). The purpose of the new Environment object is to hold the bindings of the function call's actual parameters to the function definition's formal parameters. After creating and linking the new Environment object, the interpreter gets the Apply's function value by evaluating the first argument of the Apply. This argument should evaluate to a Lambda. (In the simplest case, the apply's first argument is just a function name, and the name gets looked up in the global environment. But as we will see, the first argument to apply may be more complex than just a function name.). After the interpreter gets the function value (a lambda expression) the interpreter creates <name, value> pairs in the new Environment object, one <name, value> pair for each formal parameter in the function's lambda expression and each value in the actual parameter list from the Apply expression. (Each actual parameter expression is evaluated using the original environment chain, NOT the new Environment object.) In other words, the Apply term fills the new Environment object with <formal-parameter, actual-parameter> pairs. After populating the new Environment object, the interpreter recursively evaluates the Exp of the Lambda (the function body) using the new Environment object (NOT the original Environment chain). The result of this evaluation is the value of the Apply term. Finally, after evaluating the lambda's Exp, the interpreter restores the environment chain to it's state just before interpreting the Apply (so the new environment object, created for the function call, gets garbage collected).
+
+
+It is important to understand how (and why) the interpreter manipulates the environment chain when it handles Apply. Remember that a "local environment object" is used by the interpreter to look up the values of local variables. Also remember that the "environment chain" is used by the interpreter to look up the values of non-local variables. When a function is evaluated, its most important local variable are its formal parameters, so that is what the interpreter puts in the local Environment object. And since all the functions in this language are global functions, the only non-local variables that any function can refer to are global variables. So it must always be the case that a function's nonLocalLink points to the global environment object.
+
+Here is a simple example of a function with non-local variables.
+
+   Program
+   {
+      var x = 1;
+      var y = -11;
+      fun f(u, v)
+      {
+        x*u + y*v; // x and y are non-local variable references
+      }
+      f(3,4);
+   }
+
+When the interpreter evaluates f(3,4), it binds 3 to u and 4 to v. The environment object with those two bindings is linked to the global environment that holds x bound to 1 and y bound to -1. When the expression x*u + y*v is evaluated in the function body, u and v are looked up in the (current) local environment, and x and y are looked up using the local environments nonLocalLink.

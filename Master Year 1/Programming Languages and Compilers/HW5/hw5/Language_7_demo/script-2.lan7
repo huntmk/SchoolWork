@@ -1,0 +1,11 @@
+// demonstrate local variables
+(prog
+  (var w 10)
+  (fun f (lambda x (var u (* x x w))))
+  (begin
+    (var x 0)
+    (begin
+      (var y 2)
+      (begin
+        (set x w)
+        (var z (apply f (+ x y w)))))))
